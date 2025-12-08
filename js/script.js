@@ -1,38 +1,161 @@
 /* ========================================
-   7th Grade Biographies - Max Verstappen
-   Interactive JavaScript Functions
+   F1 RACING THEME - MAX VERSTAPPEN
+   Slide Navigation & Interactivity
    ======================================== */
 
 // ========================================
-// TIMER FUNCTIONALITY
+// SLIDE NAVIGATION
+// ========================================
+
+let currentSlide = 0;
+const totalSlides = 11;
+
+function goToSlide(index) {
+    if (index < 0 || index >= totalSlides) return;
+
+    // Remove active from current slide
+    document.querySelector('.slide.active')?.classList.remove('active');
+    document.querySelector('.indicator.active')?.classList.remove('active');
+
+    // Set new active slide
+    currentSlide = index;
+    const newSlide = document.querySelector(`[data-slide="${index}"]`);
+    const newIndicator = document.querySelector(`.indicator[data-slide="${index}"]`);
+
+    if (newSlide) newSlide.classList.add('active');
+    if (newIndicator) newIndicator.classList.add('active');
+
+    // Update progress bar
+    updateProgress();
+
+    // Play sound
+    playSound('slide');
+}
+
+function nextSlide() {
+    if (currentSlide < totalSlides - 1) {
+        goToSlide(currentSlide + 1);
+    }
+}
+
+function prevSlide() {
+    if (currentSlide > 0) {
+        goToSlide(currentSlide - 1);
+    }
+}
+
+function updateProgress() {
+    const progress = ((currentSlide + 1) / totalSlides) * 100;
+    document.getElementById('progressFill').style.width = `${progress}%`;
+}
+
+// Indicator clicks
+document.querySelectorAll('.indicator').forEach(indicator => {
+    indicator.addEventListener('click', () => {
+        const slideIndex = parseInt(indicator.dataset.slide);
+        goToSlide(slideIndex);
+    });
+});
+
+// Keyboard navigation
+document.addEventListener('keydown', (e) => {
+    if (e.target.tagName === 'INPUT') return;
+
+    switch (e.key) {
+        case 'ArrowRight':
+        case ' ':
+        case 'Enter':
+            e.preventDefault();
+            nextSlide();
+            break;
+        case 'ArrowLeft':
+            e.preventDefault();
+            prevSlide();
+            break;
+        case 'Home':
+            e.preventDefault();
+            goToSlide(0);
+            break;
+        case 'End':
+            e.preventDefault();
+            goToSlide(totalSlides - 1);
+            break;
+    }
+
+    // Number keys for quick navigation
+    if (e.key >= '0' && e.key <= '9') {
+        const num = parseInt(e.key);
+        if (num < totalSlides) {
+            goToSlide(num);
+        }
+    }
+});
+
+// Touch/swipe support
+let touchStartX = 0;
+let touchEndX = 0;
+
+document.addEventListener('touchstart', (e) => {
+    touchStartX = e.changedTouches[0].screenX;
+});
+
+document.addEventListener('touchend', (e) => {
+    touchEndX = e.changedTouches[0].screenX;
+    handleSwipe();
+});
+
+function handleSwipe() {
+    const swipeThreshold = 50;
+    const diff = touchStartX - touchEndX;
+
+    if (Math.abs(diff) > swipeThreshold) {
+        if (diff > 0) {
+            nextSlide(); // Swipe left = next
+        } else {
+            prevSlide(); // Swipe right = prev
+        }
+    }
+}
+
+// Click navigation (click right side = next, left side = prev)
+document.querySelector('.slides-container').addEventListener('click', (e) => {
+    if (e.target.closest('button, input, video, audio, .video-overlay')) return;
+
+    const screenWidth = window.innerWidth;
+    const clickX = e.clientX;
+
+    if (clickX > screenWidth * 0.7) {
+        nextSlide();
+    } else if (clickX < screenWidth * 0.3) {
+        prevSlide();
+    }
+});
+
+// ========================================
+// MAIN TIMER
 // ========================================
 
 let mainTimerInterval = null;
-let mainTimerSeconds = 40 * 60; // 40 minutes
+let mainTimerSeconds = 40 * 60;
 let mainTimerRunning = false;
 
-let practiceTimerInterval = null;
-let practiceTimerSeconds = 5 * 60; // 5 minutes
-let practiceTimerRunning = false;
-
-// Main lesson timer
-document.getElementById('timerBtn').addEventListener('click', function() {
+document.getElementById('timerBtn').addEventListener('click', function () {
     if (mainTimerRunning) {
         pauseMainTimer();
-        this.textContent = 'Resume';
+        this.textContent = 'RESUME';
     } else {
         startMainTimer();
-        this.textContent = 'Pause';
+        this.textContent = 'PAUSE';
     }
 });
 
 function startMainTimer() {
     mainTimerRunning = true;
-    mainTimerInterval = setInterval(function() {
+    mainTimerInterval = setInterval(() => {
         if (mainTimerSeconds <= 0) {
             clearInterval(mainTimerInterval);
             document.getElementById('timer').textContent = "00:00";
-            alert('Ders süresi doldu! (Time is up!)');
+            playSound('finish');
             return;
         }
         mainTimerSeconds--;
@@ -52,19 +175,229 @@ function updateTimerDisplay(elementId, seconds) {
         String(minutes).padStart(2, '0') + ':' + String(secs).padStart(2, '0');
 }
 
-// Practice timer for speaking activity
-function startPracticeTimer() {
+// ========================================
+// MYSTERY GAME (Phase 1)
+// ========================================
+
+function showClue(num) {
+    const clue = document.getElementById('clue' + num);
+    if (clue) {
+        clue.classList.add('visible');
+        playSound('reveal');
+    }
+}
+
+function revealPerson() {
+    // Show all clues
+    for (let i = 1; i <= 3; i++) {
+        showClue(i);
+    }
+
+    // Remove blur overlay
+    document.getElementById('blurOverlay').classList.add('revealed');
+
+    // Hide question mark
+    document.getElementById('questionMark').classList.add('hidden');
+
+    // Show name
+    document.getElementById('revealName').classList.remove('hidden');
+    document.getElementById('revealName').classList.add('visible');
+
+    playSound('victory');
+}
+
+// ========================================
+// VOCABULARY (Phase 1)
+// ========================================
+
+function speakWord(word) {
+    // Use Web Speech API
+    if ('speechSynthesis' in window) {
+        const utterance = new SpeechSynthesisUtterance(word);
+        utterance.lang = 'en-US';
+        utterance.rate = 0.8;
+        speechSynthesis.speak(utterance);
+    }
+    playSound('click');
+}
+
+// ========================================
+// AUDIO PLAYER (Phase 2)
+// ========================================
+
+const listeningAudio = document.getElementById('listeningAudio');
+
+function playAudio() {
+    if (listeningAudio) {
+        listeningAudio.play().catch(() => {
+            showToast('Audio file not found. Add: media/audio/verstappen-story.mp3');
+        });
+    }
+}
+
+function pauseAudio() {
+    if (listeningAudio) {
+        listeningAudio.pause();
+    }
+}
+
+function restartAudio() {
+    if (listeningAudio) {
+        listeningAudio.currentTime = 0;
+        listeningAudio.play().catch(() => {
+            showToast('Audio file not found');
+        });
+    }
+}
+
+function slowAudio() {
+    if (listeningAudio) {
+        listeningAudio.playbackRate = listeningAudio.playbackRate === 1 ? 0.7 : 1;
+        showToast(listeningAudio.playbackRate === 1 ? 'Normal speed' : 'Slow speed (0.7x)');
+    }
+}
+
+function toggleTranscript() {
+    const transcript = document.getElementById('transcript');
+    transcript.classList.toggle('hidden');
+}
+
+// ========================================
+// TIMELINE ACTIVITY (Phase 2)
+// ========================================
+
+function checkAnswer(inputId) {
+    const input = document.getElementById(inputId);
+    if (!input) return;
+
+    const userAnswer = input.value.toLowerCase().trim();
+    const correctAnswer = input.dataset.answer.toLowerCase();
+
+    // Check for partial match
+    const isCorrect = correctAnswer.includes(userAnswer) ||
+        userAnswer.includes(correctAnswer) ||
+        levenshtein(userAnswer, correctAnswer) <= 2;
+
+    if (isCorrect && userAnswer.length > 2) {
+        input.classList.remove('wrong');
+        input.classList.add('correct');
+        input.value = capitalize(correctAnswer);
+        playSound('correct');
+    } else {
+        input.classList.remove('correct');
+        input.classList.add('wrong');
+        playSound('wrong');
+    }
+}
+
+function revealAllTimeline() {
+    document.querySelectorAll('.timeline-input').forEach(input => {
+        input.value = capitalize(input.dataset.answer);
+        input.classList.remove('wrong');
+        input.classList.add('correct');
+    });
+    playSound('reveal');
+}
+
+// Levenshtein distance for fuzzy matching
+function levenshtein(a, b) {
+    const matrix = [];
+    for (let i = 0; i <= b.length; i++) {
+        matrix[i] = [i];
+    }
+    for (let j = 0; j <= a.length; j++) {
+        matrix[0][j] = j;
+    }
+    for (let i = 1; i <= b.length; i++) {
+        for (let j = 1; j <= a.length; j++) {
+            if (b.charAt(i - 1) === a.charAt(j - 1)) {
+                matrix[i][j] = matrix[i - 1][j - 1];
+            } else {
+                matrix[i][j] = Math.min(
+                    matrix[i - 1][j - 1] + 1,
+                    matrix[i][j - 1] + 1,
+                    matrix[i - 1][j] + 1
+                );
+            }
+        }
+    }
+    return matrix[b.length][a.length];
+}
+
+function capitalize(str) {
+    return str.split(' ').map(word =>
+        word.charAt(0).toUpperCase() + word.slice(1)
+    ).join(' ');
+}
+
+// ========================================
+// QUIZ (Phase 3)
+// ========================================
+
+function selectQuiz(button, isCorrect) {
+    const parent = button.closest('.quiz-options');
+    const buttons = parent.querySelectorAll('.quiz-opt');
+
+    // Reset all
+    buttons.forEach(btn => {
+        btn.classList.remove('selected-correct', 'selected-wrong');
+    });
+
+    // Mark clicked
+    if (button.classList.contains('correct')) {
+        button.classList.add('selected-correct');
+        playSound('correct');
+    } else {
+        button.classList.add('selected-wrong');
+        playSound('wrong');
+        // Show correct after delay
+        setTimeout(() => {
+            parent.querySelector('.correct').classList.add('selected-correct');
+        }, 500);
+    }
+}
+
+function checkTF(button, isCorrect) {
+    const parent = button.closest('.tf-row');
+    const buttons = parent.querySelectorAll('.tf-btn');
+
+    buttons.forEach(btn => {
+        btn.classList.remove('selected-correct', 'selected-wrong');
+    });
+
+    if (button.classList.contains('correct')) {
+        button.classList.add('selected-correct');
+        playSound('correct');
+    } else {
+        button.classList.add('selected-wrong');
+        playSound('wrong');
+        setTimeout(() => {
+            parent.querySelector('.correct').classList.add('selected-correct');
+        }, 500);
+    }
+}
+
+// ========================================
+// PRACTICE TIMER (Phase 4)
+// ========================================
+
+let practiceTimerInterval = null;
+let practiceTimerSeconds = 5 * 60;
+let practiceTimerRunning = false;
+
+function startPractice() {
     if (practiceTimerRunning) return;
 
     practiceTimerRunning = true;
-    practiceTimerInterval = setInterval(function() {
+    practiceTimerInterval = setInterval(() => {
         if (practiceTimerSeconds <= 0) {
             clearInterval(practiceTimerInterval);
             document.getElementById('practiceTimer').textContent = "00:00";
             playSound('finish');
-            alert('Practice time is over! Return to your seats.');
+            practiceTimerRunning = false;
             return;
         }
+
         practiceTimerSeconds--;
         updateTimerDisplay('practiceTimer', practiceTimerSeconds);
 
@@ -75,7 +408,7 @@ function startPracticeTimer() {
     }, 1000);
 }
 
-function resetPracticeTimer() {
+function resetPractice() {
     practiceTimerRunning = false;
     clearInterval(practiceTimerInterval);
     practiceTimerSeconds = 5 * 60;
@@ -83,401 +416,30 @@ function resetPracticeTimer() {
 }
 
 // ========================================
-// PHASE 1: MYSTERY GAME FUNCTIONS
+// VIDEO OVERLAYS
 // ========================================
 
-let cluesShown = 0;
+document.querySelectorAll('.video-overlay').forEach(overlay => {
+    overlay.addEventListener('click', function () {
+        const videoFrame = this.closest('.video-frame');
+        const video = videoFrame.querySelector('video');
 
-function showClue(clueNumber) {
-    const clue = document.getElementById('clue' + clueNumber);
-    if (clue) {
-        clue.classList.remove('hidden');
-        clue.classList.add('visible');
-        cluesShown++;
-    }
-}
+        this.classList.add('hidden');
 
-function revealPerson() {
-    // Show all clues first
-    for (let i = 1; i <= 3; i++) {
-        showClue(i);
-    }
-
-    // Remove blur from image
-    const image = document.getElementById('mysteryImage');
-    if (image) {
-        image.classList.remove('blurred');
-    }
-
-    // Hide overlay
-    const overlay = document.getElementById('mysteryOverlay');
-    if (overlay) {
-        overlay.classList.add('hidden');
-    }
-
-    // Play reveal sound if available
-    playSound('reveal');
-
-    // Show celebration
-    showCelebration('It\'s Max Verstappen! 🏎️');
-}
-
-// ========================================
-// VOCABULARY AUDIO FUNCTIONS
-// ========================================
-
-function playWord(word) {
-    const audio = document.getElementById('audio-' + word);
-    if (audio) {
-        audio.currentTime = 0;
-        audio.play().catch(e => {
-            console.log('Audio not available for:', word);
-            // Visual feedback when audio not available
-            showToast('Audio file not available. Add: media/audio/vocab/' + word + '.mp3');
-        });
-    } else {
-        showToast('Audio file not available. Add: media/audio/vocab/' + word + '.mp3');
-    }
-}
-
-// ========================================
-// DRILL CHECK FUNCTIONS
-// ========================================
-
-function checkDrill(button, isCorrect) {
-    const parent = button.closest('.drill-answers');
-    const buttons = parent.querySelectorAll('.btn-answer');
-
-    // Reset all buttons in this drill
-    buttons.forEach(btn => {
-        btn.classList.remove('selected-correct', 'selected-wrong');
+        if (video) {
+            video.play().catch(() => {
+                showToast('Video file not found');
+                this.classList.remove('hidden');
+            });
+        }
     });
-
-    // Mark the clicked button
-    if (button.classList.contains('correct')) {
-        button.classList.add('selected-correct');
-        playSound('correct');
-    } else {
-        button.classList.add('selected-wrong');
-        playSound('wrong');
-        // Show the correct answer
-        setTimeout(() => {
-            parent.querySelector('.correct').classList.add('selected-correct');
-        }, 500);
-    }
-}
+});
 
 // ========================================
-// AUDIO PLAYER FUNCTIONS
+// SOUND EFFECTS
 // ========================================
 
-function playAudio(audioId) {
-    const audio = document.getElementById(audioId);
-    if (audio) {
-        audio.play().catch(e => {
-            showToast('Audio file not found. Please add the audio file.');
-        });
-    }
-}
-
-function pauseAudio(audioId) {
-    const audio = document.getElementById(audioId);
-    if (audio) {
-        audio.pause();
-    }
-}
-
-function restartAudio(audioId) {
-    const audio = document.getElementById(audioId);
-    if (audio) {
-        audio.currentTime = 0;
-        audio.play().catch(e => {
-            showToast('Audio file not found.');
-        });
-    }
-}
-
-function slowAudio(audioId) {
-    const audio = document.getElementById(audioId);
-    if (audio) {
-        // Toggle between normal and slow speed
-        if (audio.playbackRate === 1) {
-            audio.playbackRate = 0.75;
-            showToast('Playback speed: 0.75x (Slow)');
-        } else {
-            audio.playbackRate = 1;
-            showToast('Playback speed: 1x (Normal)');
-        }
-    }
-}
-
-// ========================================
-// TRANSCRIPT TOGGLE
-// ========================================
-
-function toggleTranscript() {
-    const transcript = document.getElementById('transcript');
-    if (transcript) {
-        transcript.classList.toggle('hidden');
-    }
-}
-
-// ========================================
-// TIMELINE ANSWER CHECKING
-// ========================================
-
-function checkTimelineAnswer(inputId) {
-    const input = document.getElementById(inputId);
-    const feedback = document.getElementById('feedback' + inputId.replace('answer', ''));
-
-    if (!input) return;
-
-    const userAnswer = input.value.toLowerCase().trim();
-    const correctAnswer = input.dataset.answer.toLowerCase();
-
-    // Check for partial matches
-    const isCorrect = correctAnswer.includes(userAnswer) || userAnswer.includes(correctAnswer) ||
-                      levenshteinDistance(userAnswer, correctAnswer) <= 2;
-
-    if (isCorrect && userAnswer.length > 0) {
-        input.classList.remove('incorrect');
-        input.classList.add('correct');
-        input.value = correctAnswer.charAt(0).toUpperCase() + correctAnswer.slice(1);
-        if (feedback) {
-            feedback.textContent = '✓';
-            feedback.style.color = '#22c55e';
-        }
-        playSound('correct');
-    } else {
-        input.classList.remove('correct');
-        input.classList.add('incorrect');
-        if (feedback) {
-            feedback.textContent = '✗';
-            feedback.style.color = '#ef4444';
-        }
-        playSound('wrong');
-    }
-}
-
-function revealAllAnswers() {
-    const inputs = document.querySelectorAll('.timeline-input');
-    inputs.forEach(input => {
-        const correctAnswer = input.dataset.answer;
-        input.value = correctAnswer.charAt(0).toUpperCase() + correctAnswer.slice(1);
-        input.classList.remove('incorrect');
-        input.classList.add('correct');
-    });
-
-    const feedbacks = document.querySelectorAll('.answer-feedback');
-    feedbacks.forEach(feedback => {
-        feedback.textContent = '✓';
-        feedback.style.color = '#22c55e';
-    });
-}
-
-// Levenshtein distance for fuzzy matching
-function levenshteinDistance(str1, str2) {
-    const m = str1.length;
-    const n = str2.length;
-    const dp = Array(m + 1).fill(null).map(() => Array(n + 1).fill(0));
-
-    for (let i = 0; i <= m; i++) dp[i][0] = i;
-    for (let j = 0; j <= n; j++) dp[0][j] = j;
-
-    for (let i = 1; i <= m; i++) {
-        for (let j = 1; j <= n; j++) {
-            if (str1[i - 1] === str2[j - 1]) {
-                dp[i][j] = dp[i - 1][j - 1];
-            } else {
-                dp[i][j] = Math.min(dp[i - 1][j - 1], dp[i - 1][j], dp[i][j - 1]) + 1;
-            }
-        }
-    }
-
-    return dp[m][n];
-}
-
-// ========================================
-// Q&A SHOW ANSWER
-// ========================================
-
-function showAnswer(answerId) {
-    const answer = document.getElementById(answerId);
-    if (answer) {
-        answer.classList.toggle('hidden');
-    }
-}
-
-// ========================================
-// READING TASK FUNCTIONS
-// ========================================
-
-function selectOption(button, questionId, isCorrect) {
-    const parent = button.closest('.answer-options');
-    const buttons = parent.querySelectorAll('.btn-option');
-    const structure = document.getElementById(questionId + '-structure');
-
-    // Reset all buttons
-    buttons.forEach(btn => {
-        btn.classList.remove('selected-correct', 'selected-wrong');
-    });
-
-    // Mark the clicked button
-    if (button.classList.contains('correct')) {
-        button.classList.add('selected-correct');
-        playSound('correct');
-        // Show target structure
-        if (structure) {
-            structure.classList.remove('hidden');
-        }
-    } else {
-        button.classList.add('selected-wrong');
-        playSound('wrong');
-        // Show correct answer after delay
-        setTimeout(() => {
-            parent.querySelector('.correct').classList.add('selected-correct');
-            if (structure) {
-                structure.classList.remove('hidden');
-            }
-        }, 500);
-    }
-}
-
-// ========================================
-// TRUE/FALSE FUNCTIONS
-// ========================================
-
-function checkTF(button, isCorrect) {
-    const parent = button.closest('.tf-buttons');
-    const buttons = parent.querySelectorAll('.btn-tf');
-    const feedbackSpan = button.closest('.tf-item').querySelector('.tf-feedback');
-
-    // Reset all buttons
-    buttons.forEach(btn => {
-        btn.classList.remove('selected-correct', 'selected-wrong');
-    });
-
-    // Mark the clicked button
-    if (button.classList.contains('correct')) {
-        button.classList.add('selected-correct');
-        playSound('correct');
-        if (feedbackSpan) {
-            feedbackSpan.style.color = '#22c55e';
-        }
-    } else {
-        button.classList.add('selected-wrong');
-        playSound('wrong');
-        // Show correct answer
-        setTimeout(() => {
-            parent.querySelector('.correct').classList.add('selected-correct');
-        }, 500);
-        if (feedbackSpan) {
-            feedbackSpan.style.color = '#ef4444';
-        }
-    }
-}
-
-// ========================================
-// UTILITY FUNCTIONS
-// ========================================
-
-// Toast notification
-function showToast(message, duration = 3000) {
-    // Remove existing toast
-    const existingToast = document.querySelector('.toast-notification');
-    if (existingToast) {
-        existingToast.remove();
-    }
-
-    // Create new toast
-    const toast = document.createElement('div');
-    toast.className = 'toast-notification';
-    toast.innerHTML = message;
-    toast.style.cssText = `
-        position: fixed;
-        bottom: 20px;
-        left: 50%;
-        transform: translateX(-50%);
-        background: #1e293b;
-        color: white;
-        padding: 1rem 2rem;
-        border-radius: 12px;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-        z-index: 9999;
-        font-size: 1rem;
-        animation: slideUp 0.3s ease;
-    `;
-
-    document.body.appendChild(toast);
-
-    setTimeout(() => {
-        toast.style.animation = 'slideDown 0.3s ease';
-        setTimeout(() => toast.remove(), 300);
-    }, duration);
-}
-
-// Celebration effect
-function showCelebration(message) {
-    const celebration = document.createElement('div');
-    celebration.className = 'celebration-overlay';
-    celebration.innerHTML = `
-        <div class="celebration-content">
-            <div class="celebration-emoji">🎉</div>
-            <h2>${message}</h2>
-        </div>
-    `;
-    celebration.style.cssText = `
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: rgba(0,0,0,0.8);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        z-index: 9999;
-        animation: fadeIn 0.3s ease;
-    `;
-
-    const content = celebration.querySelector('.celebration-content');
-    content.style.cssText = `
-        text-align: center;
-        color: white;
-    `;
-
-    const emoji = celebration.querySelector('.celebration-emoji');
-    emoji.style.cssText = `
-        font-size: 8rem;
-        animation: bounce 0.5s ease infinite;
-    `;
-
-    const h2 = celebration.querySelector('h2');
-    h2.style.cssText = `
-        font-size: 3rem;
-        margin-top: 1rem;
-    `;
-
-    document.body.appendChild(celebration);
-
-    // Click to dismiss
-    celebration.addEventListener('click', () => {
-        celebration.style.animation = 'fadeOut 0.3s ease';
-        setTimeout(() => celebration.remove(), 300);
-    });
-
-    // Auto dismiss after 3 seconds
-    setTimeout(() => {
-        if (document.body.contains(celebration)) {
-            celebration.style.animation = 'fadeOut 0.3s ease';
-            setTimeout(() => celebration.remove(), 300);
-        }
-    }, 3000);
-}
-
-// Sound effects (placeholder - will play if files exist)
 function playSound(type) {
-    // Create audio context for simple sounds
     try {
         const audioContext = new (window.AudioContext || window.webkitAudioContext)();
         const oscillator = audioContext.createOscillator();
@@ -485,215 +447,148 @@ function playSound(type) {
 
         oscillator.connect(gainNode);
         gainNode.connect(audioContext.destination);
+        gainNode.gain.value = 0.15;
 
-        switch(type) {
-            case 'correct':
-                oscillator.frequency.value = 880; // A5
+        switch (type) {
+            case 'slide':
+                oscillator.frequency.value = 600;
                 oscillator.type = 'sine';
-                gainNode.gain.value = 0.3;
+                oscillator.start();
+                oscillator.stop(audioContext.currentTime + 0.08);
+                break;
+            case 'correct':
+                oscillator.frequency.value = 880;
+                oscillator.type = 'sine';
                 oscillator.start();
                 oscillator.stop(audioContext.currentTime + 0.15);
                 break;
             case 'wrong':
-                oscillator.frequency.value = 220; // A3
-                oscillator.type = 'sine';
-                gainNode.gain.value = 0.3;
+                oscillator.frequency.value = 200;
+                oscillator.type = 'sawtooth';
+                gainNode.gain.value = 0.1;
                 oscillator.start();
-                oscillator.stop(audioContext.currentTime + 0.3);
+                oscillator.stop(audioContext.currentTime + 0.25);
                 break;
             case 'reveal':
-                oscillator.frequency.value = 523; // C5
+                oscillator.frequency.value = 523;
                 oscillator.type = 'sine';
-                gainNode.gain.value = 0.3;
                 oscillator.start();
-                setTimeout(() => {
-                    oscillator.frequency.value = 659; // E5
-                }, 100);
-                setTimeout(() => {
-                    oscillator.frequency.value = 784; // G5
-                }, 200);
-                oscillator.stop(audioContext.currentTime + 0.4);
+                setTimeout(() => oscillator.frequency.value = 659, 100);
+                setTimeout(() => oscillator.frequency.value = 784, 200);
+                oscillator.stop(audioContext.currentTime + 0.35);
+                break;
+            case 'victory':
+                oscillator.frequency.value = 523;
+                oscillator.type = 'sine';
+                oscillator.start();
+                setTimeout(() => oscillator.frequency.value = 659, 150);
+                setTimeout(() => oscillator.frequency.value = 784, 300);
+                setTimeout(() => oscillator.frequency.value = 1047, 450);
+                oscillator.stop(audioContext.currentTime + 0.6);
+                break;
+            case 'click':
+                oscillator.frequency.value = 1000;
+                oscillator.type = 'sine';
+                oscillator.start();
+                oscillator.stop(audioContext.currentTime + 0.05);
                 break;
             case 'warning':
-                oscillator.frequency.value = 440; // A4
+                oscillator.frequency.value = 440;
                 oscillator.type = 'square';
-                gainNode.gain.value = 0.2;
+                gainNode.gain.value = 0.1;
                 oscillator.start();
                 oscillator.stop(audioContext.currentTime + 0.5);
                 break;
             case 'finish':
                 oscillator.frequency.value = 880;
                 oscillator.type = 'sine';
-                gainNode.gain.value = 0.3;
                 oscillator.start();
                 oscillator.stop(audioContext.currentTime + 1);
                 break;
         }
     } catch (e) {
-        console.log('Audio not supported');
+        // Audio not supported
     }
 }
 
 // ========================================
-// SMOOTH SCROLLING FOR NAVIGATION
+// TOAST NOTIFICATIONS
 // ========================================
 
-document.querySelectorAll('.nav-links a').forEach(link => {
-    link.addEventListener('click', function(e) {
-        e.preventDefault();
-        const targetId = this.getAttribute('href');
-        const targetSection = document.querySelector(targetId);
+function showToast(message, duration = 3000) {
+    const existingToast = document.querySelector('.toast');
+    if (existingToast) existingToast.remove();
 
-        if (targetSection) {
-            targetSection.scrollIntoView({
-                behavior: 'smooth',
-                block: 'start'
-            });
+    const toast = document.createElement('div');
+    toast.className = 'toast';
+    toast.textContent = message;
+    toast.style.cssText = `
+        position: fixed;
+        bottom: 30px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: rgba(0, 0, 0, 0.9);
+        color: white;
+        padding: 1rem 2rem;
+        border-radius: 10px;
+        font-size: 1rem;
+        z-index: 9999;
+        border: 2px solid #ff8000;
+        animation: fadeIn 0.3s ease;
+    `;
 
-            // Highlight the section briefly
-            targetSection.style.animation = 'highlight 1s ease';
-            setTimeout(() => {
-                targetSection.style.animation = '';
-            }, 1000);
-        }
-    });
-});
+    document.body.appendChild(toast);
 
-// ========================================
-// VIDEO PLACEHOLDER HANDLING
-// ========================================
-
-// Check if video files exist and hide placeholders if they do
-document.addEventListener('DOMContentLoaded', function() {
-    const videos = document.querySelectorAll('video');
-
-    videos.forEach(video => {
-        const placeholder = video.nextElementSibling;
-
-        video.addEventListener('loadeddata', function() {
-            if (placeholder && placeholder.classList.contains('video-placeholder')) {
-                placeholder.style.display = 'none';
-            }
-        });
-
-        video.addEventListener('error', function() {
-            // Video failed to load, keep placeholder visible
-            video.style.display = 'none';
-        });
-    });
-
-    // Same for audio
-    const audios = document.querySelectorAll('audio');
-
-    audios.forEach(audio => {
-        const placeholder = audio.nextElementSibling;
-
-        audio.addEventListener('loadeddata', function() {
-            if (placeholder && placeholder.classList.contains('audio-placeholder')) {
-                placeholder.style.display = 'none';
-            }
-        });
-    });
-});
+    setTimeout(() => {
+        toast.style.opacity = '0';
+        setTimeout(() => toast.remove(), 300);
+    }, duration);
+}
 
 // ========================================
-// KEYBOARD SHORTCUTS FOR TEACHER
+// FULLSCREEN MODE
 // ========================================
 
-document.addEventListener('keydown', function(e) {
-    // Space to pause/play main timer
-    if (e.code === 'Space' && e.target.tagName !== 'INPUT') {
-        e.preventDefault();
-        document.getElementById('timerBtn').click();
-    }
-
-    // Number keys 1-5 for phase navigation
-    if (e.key >= '1' && e.key <= '5' && e.target.tagName !== 'INPUT') {
-        e.preventDefault();
-        const phases = ['phase1', 'phase2', 'phase3', 'phase4', 'homework'];
-        const phaseIndex = parseInt(e.key) - 1;
-        const targetSection = document.getElementById(phases[phaseIndex]);
-        if (targetSection) {
-            targetSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
-    }
-
-    // R to reveal mystery person
-    if (e.code === 'KeyR' && e.target.tagName !== 'INPUT') {
-        e.preventDefault();
-        revealPerson();
+document.addEventListener('dblclick', (e) => {
+    if (e.target.closest('.top-bar')) {
+        toggleFullscreen();
     }
 });
-
-// ========================================
-// ADD ANIMATION KEYFRAMES
-// ========================================
-
-const style = document.createElement('style');
-style.textContent = `
-    @keyframes slideUp {
-        from { transform: translate(-50%, 100%); opacity: 0; }
-        to { transform: translate(-50%, 0); opacity: 1; }
-    }
-
-    @keyframes slideDown {
-        from { transform: translate(-50%, 0); opacity: 1; }
-        to { transform: translate(-50%, 100%); opacity: 0; }
-    }
-
-    @keyframes fadeIn {
-        from { opacity: 0; }
-        to { opacity: 1; }
-    }
-
-    @keyframes fadeOut {
-        from { opacity: 1; }
-        to { opacity: 0; }
-    }
-
-    @keyframes bounce {
-        0%, 100% { transform: scale(1); }
-        50% { transform: scale(1.2); }
-    }
-
-    @keyframes highlight {
-        0% { box-shadow: 0 0 0 0 rgba(6, 0, 239, 0.5); }
-        50% { box-shadow: 0 0 0 20px rgba(6, 0, 239, 0); }
-        100% { box-shadow: 0 0 0 0 rgba(6, 0, 239, 0); }
-    }
-`;
-document.head.appendChild(style);
-
-// ========================================
-// FULLSCREEN MODE FOR SMARTBOARD
-// ========================================
 
 function toggleFullscreen() {
     if (!document.fullscreenElement) {
-        document.documentElement.requestFullscreen().catch(e => {
-            console.log('Fullscreen not supported');
-        });
+        document.documentElement.requestFullscreen().catch(() => { });
     } else {
         document.exitFullscreen();
     }
 }
 
-// Double-click on header to toggle fullscreen
-document.querySelector('.hero').addEventListener('dblclick', toggleFullscreen);
-
-// ========================================
-// INITIALIZE ON PAGE LOAD
-// ========================================
-
-document.addEventListener('DOMContentLoaded', function() {
-    console.log('🏎️ Max Verstappen Biography Lesson - Ready!');
-    console.log('Keyboard shortcuts:');
-    console.log('  Space - Start/Pause timer');
-    console.log('  1-5   - Jump to phases');
-    console.log('  R     - Reveal mystery person');
-
-    // Show welcome toast
-    setTimeout(() => {
-        showToast('Welcome! Press Space to start the timer.', 4000);
-    }, 1000);
+// F key for fullscreen
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'f' || e.key === 'F') {
+        if (e.target.tagName !== 'INPUT') {
+            toggleFullscreen();
+        }
+    }
 });
+
+// ========================================
+// INITIALIZATION
+// ========================================
+
+document.addEventListener('DOMContentLoaded', () => {
+    updateProgress();
+    console.log('🏎️ Max Verstappen Lesson - Ready!');
+    console.log('Navigation: Arrow keys, Space, Click, Swipe');
+    console.log('Fullscreen: Press F or double-click top bar');
+});
+
+// Add CSS animation
+const style = document.createElement('style');
+style.textContent = `
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translate(-50%, 20px); }
+        to { opacity: 1; transform: translate(-50%, 0); }
+    }
+`;
+document.head.appendChild(style);
