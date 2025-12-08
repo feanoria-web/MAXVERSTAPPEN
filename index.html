@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>7th Grade - Unit 3: Biographies | Max Verstappen</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-brand">
+            <span class="nav-icon">🏎️</span>
+            <span>Unit 3: Biographies</span>
+        </div>
+        <ul class="nav-links">
+            <li><a href="#phase1" data-phase="1">Phase 1</a></li>
+            <li><a href="#phase2" data-phase="2">Phase 2</a></li>
+            <li><a href="#phase3" data-phase="3">Phase 3</a></li>
+            <li><a href="#phase4" data-phase="4">Phase 4</a></li>
+            <li><a href="#homework" data-phase="5">Homework</a></li>
+        </ul>
+        <div class="timer-display">
+            <span id="timer">40:00</span>
+            <button id="timerBtn" class="timer-btn">Start</button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="hero">
+        <div class="hero-content">
+            <h1>The Racer's Journey</h1>
+            <h2>Highs and Lows</h2>
+            <p class="hero-subtitle">7th Grade | A2 Level | 40 Minutes</p>
+            <div class="learning-outcomes">
+                <span class="outcome-badge">🎧 Listening for specific information</span>
+                <span class="outcome-badge">📖 Reading for dates/names</span>
+                <span class="outcome-badge">🗣️ Speaking about past events</span>
+            </div>
+        </div>
+        <div class="hero-image">
+            <div class="racing-animation"></div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container">
+
+        <!-- PHASE 1: Warm-Up -->
+        <section id="phase1" class="phase-section">
+            <div class="phase-header">
+                <div class="phase-number">1</div>
+                <div class="phase-info">
+                    <h2>Warm-Up & Introduction</h2>
+                    <span class="phase-time">5 Minutes</span>
+                </div>
+            </div>
+
+            <div class="activity-card">
+                <h3>🎯 Activity: "Who is that person?"</h3>
+                <p class="activity-goal"><strong>Goal:</strong> Activate background knowledge and engage students using visual aids</p>
+
+                <!-- Mystery Person Game -->
+                <div class="mystery-game">
+                    <div class="mystery-image-container">
+                        <img src="images/verstappen-blur.svg" alt="Mystery Person" id="mysteryImage" class="mystery-image blurred">
+                        <div class="mystery-overlay" id="mysteryOverlay">
+                            <span class="question-mark">?</span>
+                        </div>
+                    </div>
+
+                    <div class="clues-container">
+                        <h4>🔍 Clues</h4>
+                        <div class="clue hidden" id="clue1">
+                            <span class="clue-number">1</span>
+                            <p>He <strong>was born</strong> in 1997 in Belgium.</p>
+                        </div>
+                        <div class="clue hidden" id="clue2">
+                            <span class="clue-number">2</span>
+                            <p>He <strong>grew up</strong> in a racing family. His father was a driver, too.</p>
+                        </div>
+                        <div class="clue hidden" id="clue3">
+                            <span class="clue-number">3</span>
+                            <p>He is famous for driving very fast cars in Formula 1.</p>
+                        </div>
+
+                        <div class="clue-buttons">
+                            <button class="btn btn-clue" onclick="showClue(1)">Show Clue 1</button>
+                            <button class="btn btn-clue" onclick="showClue(2)">Show Clue 2</button>
+                            <button class="btn btn-clue" onclick="showClue(3)">Show Clue 3</button>
+                            <button class="btn btn-reveal" onclick="revealPerson()">🎉 Reveal Answer!</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Introduction Video -->
+                <div class="media-section">
+                    <h4>📹 Meet Max Verstappen</h4>
+                    <div class="video-container">
+                        <video id="introVideo" controls poster="images/verstappen-poster.svg">
+                            <source src="media/videos/verstappen-intro.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                        <div class="video-placeholder" id="introVideoPlaceholder">
+                            <div class="placeholder-content">
+                                <span class="placeholder-icon">🎬</span>
+                                <p>Video: Max Verstappen Introduction</p>
+                                <small>Place your video file at: <code>media/videos/verstappen-intro.mp4</code></small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Vocabulary Section -->
+                <div class="vocabulary-section">
+                    <h4>📚 Target Vocabulary</h4>
+                    <div class="vocab-grid">
+                        <div class="vocab-card" onclick="playWord('born')">
+                            <span class="vocab-word">born</span>
+                            <span class="vocab-meaning">doğmak</span>
+                            <span class="vocab-example">"He was born in 1997"</span>
+                            <button class="sound-btn">🔊</button>
+                        </div>
+                        <div class="vocab-card" onclick="playWord('grow-up')">
+                            <span class="vocab-word">grow up</span>
+                            <span class="vocab-meaning">büyümek</span>
+                            <span class="vocab-example">"He grew up in a racing family"</span>
+                            <button class="sound-btn">🔊</button>
+                        </div>
+                        <div class="vocab-card" onclick="playWord('move')">
+                            <span class="vocab-word">move</span>
+                            <span class="vocab-meaning">taşınmak</span>
+                            <span class="vocab-example">"He moved to Monaco"</span>
+                            <button class="sound-btn">🔊</button>
+                        </div>
+                        <div class="vocab-card" onclick="playWord('beat')">
+                            <span class="vocab-word">beat</span>
+                            <span class="vocab-meaning">yenmek</span>
+                            <span class="vocab-example">"He beat Hamilton"</span>
+                            <button class="sound-btn">🔊</button>
+                        </div>
+                        <div class="vocab-card" onclick="playWord('lose')">
+                            <span class="vocab-word">lose</span>
+                            <span class="vocab-meaning">kaybetmek</span>
+                            <span class="vocab-example">"He lost the championship"</span>
+                            <button class="sound-btn">🔊</button>
+                        </div>
+                        <div class="vocab-card" onclick="playWord('award')">
+                            <span class="vocab-word">award</span>
+                            <span class="vocab-meaning">ödül</span>
+                            <span class="vocab-example">"He won his first award"</span>
+                            <button class="sound-btn">🔊</button>
+                        </div>
+                        <div class="vocab-card" onclick="playWord('brilliant')">
+                            <span class="vocab-word">brilliant</span>
+                            <span class="vocab-meaning">parlak, zeki</span>
+                            <span class="vocab-example">"He was a brilliant child"</span>
+                            <button class="sound-btn">🔊</button>
+                        </div>
+                        <div class="vocab-card" onclick="playWord('last-lap')">
+                            <span class="vocab-word">last lap</span>
+                            <span class="vocab-meaning">son tur</span>
+                            <span class="vocab-example">"On the last lap, he passed Hamilton"</span>
+                            <button class="sound-btn">🔊</button>
+                        </div>
+                        <div class="vocab-card" onclick="playWord('point')">
+                            <span class="vocab-word">point</span>
+                            <span class="vocab-meaning">puan</span>
+                            <span class="vocab-example">"He lost by 2 points"</span>
+                            <button class="sound-btn">🔊</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Vocabulary Drill -->
+                <div class="drill-section">
+                    <h4>💬 Quick Drill</h4>
+                    <div class="drill-questions">
+                        <div class="drill-item">
+                            <p class="drill-question">Did he <em>beat</em> Hamilton in 2021?</p>
+                            <div class="drill-answers">
+                                <button class="btn btn-answer correct" onclick="checkDrill(this, true)">Yes ✓</button>
+                                <button class="btn btn-answer" onclick="checkDrill(this, false)">No</button>
+                            </div>
+                        </div>
+                        <div class="drill-item">
+                            <p class="drill-question">Did he <em>lose</em> in 2025?</p>
+                            <div class="drill-answers">
+                                <button class="btn btn-answer correct" onclick="checkDrill(this, true)">Yes ✓</button>
+                                <button class="btn btn-answer" onclick="checkDrill(this, false)">No</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PHASE 2: Listening -->
+        <section id="phase2" class="phase-section">
+            <div class="phase-header">
+                <div class="phase-number">2</div>
+                <div class="phase-info">
+                    <h2>Listening</h2>
+                    <span class="phase-time">10 Minutes</span>
+                </div>
+            </div>
+
+            <div class="learning-outcome-box">
+                <span class="outcome-code">E7.3.L1</span>
+                <p>Students will be able to recognize specific information in oral texts dealing with past events and dates.</p>
+            </div>
+
+            <div class="activity-card">
+                <h3>🎧 Activity: "Timeline of a Champion"</h3>
+
+                <!-- Audio Player Section -->
+                <div class="media-section audio-section">
+                    <h4>🔊 Listen to Max's Story</h4>
+                    <div class="audio-container">
+                        <audio id="listeningAudio" controls>
+                            <source src="media/audio/verstappen-story.mp3" type="audio/mpeg">
+                            Your browser does not support the audio element.
+                        </audio>
+                        <div class="audio-placeholder" id="listeningAudioPlaceholder">
+                            <div class="placeholder-content">
+                                <span class="placeholder-icon">🎵</span>
+                                <p>Audio: Max Verstappen Story</p>
+                                <small>Place your audio file at: <code>media/audio/verstappen-story.mp3</code></small>
+                            </div>
+                        </div>
+                        <div class="audio-controls">
+                            <button class="btn btn-audio" onclick="playAudio('listeningAudio')">▶️ Play</button>
+                            <button class="btn btn-audio" onclick="pauseAudio('listeningAudio')">⏸️ Pause</button>
+                            <button class="btn btn-audio" onclick="restartAudio('listeningAudio')">🔄 Restart</button>
+                            <button class="btn btn-audio" onclick="slowAudio('listeningAudio')">🐢 Slow</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Transcript (Hidden by default) -->
+                <div class="transcript-section">
+                    <button class="btn btn-transcript" onclick="toggleTranscript()">📜 Show/Hide Transcript (For Teacher)</button>
+                    <div class="transcript-content hidden" id="transcript">
+                        <blockquote>
+                            "Max Verstappen has a very exciting life story. He <strong>was born</strong> in Belgium in <strong>1997</strong>. He was a <strong>brilliant</strong> child who loved racing.
+                            <br><br>
+                            He <strong>moved</strong> to the Formula 1 team when he was very young, in <strong>2015</strong>. He wanted to be the best.
+                            <br><br>
+                            His most famous race was in <strong>2021</strong>. It was the Abu Dhabi Grand Prix. He was racing against Lewis Hamilton. It was a very difficult race. But on the <strong>last lap</strong>, Max passed Hamilton. He <strong>beat</strong> him and won his first big <strong>award</strong>: The World Championship. It was incredible."
+                        </blockquote>
+                    </div>
+                </div>
+
+                <!-- 2021 Abu Dhabi Video -->
+                <div class="media-section">
+                    <h4>📹 The Historic 2021 Abu Dhabi Race</h4>
+                    <div class="video-container">
+                        <video id="abuDhabiVideo" controls poster="images/abu-dhabi-poster.svg">
+                            <source src="media/videos/abu-dhabi-2021.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                        <div class="video-placeholder" id="abuDhabiVideoPlaceholder">
+                            <div class="placeholder-content">
+                                <span class="placeholder-icon">🏆</span>
+                                <p>Video: Abu Dhabi 2021 - The Last Lap</p>
+                                <small>Place your video file at: <code>media/videos/abu-dhabi-2021.mp4</code></small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Interactive Timeline -->
+                <div class="timeline-section">
+                    <h4>📅 Fill in the Timeline</h4>
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <div class="timeline-year">1997</div>
+                            <div class="timeline-content">
+                                <p>Born in
+                                    <input type="text" class="timeline-input" id="answer1" placeholder="?" data-answer="belgium">
+                                </p>
+                                <button class="btn btn-check-small" onclick="checkTimelineAnswer('answer1')">Check</button>
+                                <span class="answer-feedback" id="feedback1"></span>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-year">2015</div>
+                            <div class="timeline-content">
+                                <p>Moved to
+                                    <input type="text" class="timeline-input" id="answer2" placeholder="?" data-answer="formula 1">
+                                </p>
+                                <button class="btn btn-check-small" onclick="checkTimelineAnswer('answer2')">Check</button>
+                                <span class="answer-feedback" id="feedback2"></span>
+                            </div>
+                        </div>
+                        <div class="timeline-item special">
+                            <div class="timeline-year">2021</div>
+                            <div class="timeline-content">
+                                <p>Beat
+                                    <input type="text" class="timeline-input" id="answer3" placeholder="?" data-answer="lewis hamilton">
+                                    on the
+                                    <input type="text" class="timeline-input" id="answer4" placeholder="?" data-answer="last lap">
+                                </p>
+                                <button class="btn btn-check-small" onclick="checkTimelineAnswer('answer3'); checkTimelineAnswer('answer4');">Check</button>
+                                <span class="answer-feedback" id="feedback3"></span>
+                                <span class="answer-feedback" id="feedback4"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="btn btn-reveal-all" onclick="revealAllAnswers()">Show All Answers</button>
+                </div>
+
+                <!-- Comprehension Check -->
+                <div class="check-section">
+                    <h4>✅ Comprehension Check</h4>
+                    <div class="qa-grid">
+                        <div class="qa-card">
+                            <p class="qa-question"><strong>Teacher:</strong> "Who did he beat in 2021?"</p>
+                            <p class="qa-answer hidden" id="qa1"><strong>Student:</strong> "He beat Lewis Hamilton."</p>
+                            <button class="btn btn-show" onclick="showAnswer('qa1')">Show Expected Answer</button>
+                        </div>
+                        <div class="qa-card">
+                            <p class="qa-question"><strong>Teacher:</strong> "When did he beat him?"</p>
+                            <p class="qa-answer hidden" id="qa2"><strong>Student:</strong> "On the last lap."</p>
+                            <button class="btn btn-show" onclick="showAnswer('qa2')">Show Expected Answer</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PHASE 3: Reading -->
+        <section id="phase3" class="phase-section">
+            <div class="phase-header">
+                <div class="phase-number">3</div>
+                <div class="phase-info">
+                    <h2>Reading</h2>
+                    <span class="phase-time">15 Minutes</span>
+                </div>
+            </div>
+
+            <div class="learning-outcome-box">
+                <span class="outcome-code">E7.3.R1</span>
+                <p>Students will be able to spot specific information about names and dates in past events in written texts.</p>
+            </div>
+
+            <div class="activity-card">
+                <h3>📖 Activity: "The Heartbreak of 2025"</h3>
+
+                <!-- 2025 Season Video -->
+                <div class="media-section">
+                    <h4>📹 The 2025 Season Highlights</h4>
+                    <div class="video-container">
+                        <video id="season2025Video" controls poster="images/2025-poster.svg">
+                            <source src="media/videos/2025-season.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                        <div class="video-placeholder" id="season2025Placeholder">
+                            <div class="placeholder-content">
+                                <span class="placeholder-icon">😢</span>
+                                <p>Video: 2025 Season - The Heartbreak</p>
+                                <small>Place your video file at: <code>media/videos/2025-season.mp4</code></small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Reading Text -->
+                <div class="reading-section">
+                    <div class="magazine-article">
+                        <div class="article-header">
+                            <span class="article-tag">SPORTS MAGAZINE</span>
+                            <h2>THE 2025 SEASON: SO CLOSE!</h2>
+                        </div>
+                        <div class="article-content">
+                            <p>After his big wins, Max Verstappen wanted to win another trophy in <span class="highlight-date">2025</span>. He trained very hard every day <span class="highlight-reason">to be</span> strong. He <span class="highlight-vocab">moved</span> to Monaco <span class="highlight-reason">to have</span> a quiet life and focus on racing.</p>
+
+                            <p>The 2025 season was a big battle. <span class="highlight-name">Lando Norris</span> was very fast. Max tried his best to win.</p>
+
+                            <p>In the final race, everyone watched the points carefully. Max drove a <span class="highlight-vocab">brilliant</span> race, but it was not enough. He <span class="highlight-vocab">lost</span> the championship to <span class="highlight-name">Lando Norris</span>. He lost by just <span class="highlight-number">2 points</span>.</p>
+
+                            <p>Max was sad <span class="highlight-reason">because</span> he wanted to win. But he congratulated Lando. He promised to come back next year.</p>
+                        </div>
+                    </div>
+
+                    <div class="text-legend">
+                        <span class="legend-item"><span class="highlight-date">Dates</span></span>
+                        <span class="legend-item"><span class="highlight-name">Names</span></span>
+                        <span class="legend-item"><span class="highlight-vocab">Vocabulary</span></span>
+                        <span class="legend-item"><span class="highlight-reason">"to" / "because"</span></span>
+                        <span class="legend-item"><span class="highlight-number">Numbers</span></span>
+                    </div>
+
+                    <!-- Text Audio -->
+                    <div class="audio-container small">
+                        <audio id="readingAudio" controls>
+                            <source src="media/audio/reading-text.mp3" type="audio/mpeg">
+                        </audio>
+                        <div class="audio-placeholder small">
+                            <span>🔊 Reading Audio: <code>media/audio/reading-text.mp3</code></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Task A: Scanning -->
+                <div class="task-section">
+                    <h4>📝 Task A: Scanning for Specifics</h4>
+                    <div class="questions-container">
+                        <div class="question-card">
+                            <p class="question-text"><strong>Question 1:</strong> Why did Max move to Monaco?</p>
+                            <div class="answer-options">
+                                <button class="btn btn-option" onclick="selectOption(this, 'q1', false)">To be close to Formula 1</button>
+                                <button class="btn btn-option correct" onclick="selectOption(this, 'q1', true)">To have a quiet life</button>
+                                <button class="btn btn-option" onclick="selectOption(this, 'q1', false)">To train with Lando</button>
+                            </div>
+                            <p class="target-structure hidden" id="q1-structure">
+                                <strong>Target Answer:</strong> He moved to Monaco <em>to have</em> a quiet life.
+                                <span class="function-note">(Focus on "Giving explanations/reasons" function)</span>
+                            </p>
+                        </div>
+
+                        <div class="question-card">
+                            <p class="question-text"><strong>Question 2:</strong> Who won the title in 2025?</p>
+                            <div class="answer-options">
+                                <button class="btn btn-option" onclick="selectOption(this, 'q2', false)">Max Verstappen</button>
+                                <button class="btn btn-option correct" onclick="selectOption(this, 'q2', true)">Lando Norris</button>
+                                <button class="btn btn-option" onclick="selectOption(this, 'q2', false)">Lewis Hamilton</button>
+                            </div>
+                            <p class="target-structure hidden" id="q2-structure">
+                                <strong>Target Answer:</strong> Lando Norris.
+                            </p>
+                        </div>
+
+                        <div class="question-card">
+                            <p class="question-text"><strong>Question 3:</strong> How many points did Max lose by?</p>
+                            <div class="answer-options">
+                                <button class="btn btn-option" onclick="selectOption(this, 'q3', false)">10 points</button>
+                                <button class="btn btn-option correct" onclick="selectOption(this, 'q3', true)">2 points</button>
+                                <button class="btn btn-option" onclick="selectOption(this, 'q3', false)">5 points</button>
+                            </div>
+                            <p class="target-structure hidden" id="q3-structure">
+                                <strong>Target Answer:</strong> He lost by <em>2 points</em>.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Task B: True/False -->
+                <div class="task-section">
+                    <h4>📝 Task B: True or False</h4>
+                    <div class="tf-container">
+                        <div class="tf-item">
+                            <p class="tf-statement">1. Max won the championship in 2025.</p>
+                            <div class="tf-buttons">
+                                <button class="btn btn-tf" onclick="checkTF(this, false)">TRUE</button>
+                                <button class="btn btn-tf correct" onclick="checkTF(this, true)">FALSE</button>
+                            </div>
+                            <span class="tf-feedback"></span>
+                        </div>
+                        <div class="tf-item">
+                            <p class="tf-statement">2. Lando Norris beat Max by 10 points.</p>
+                            <div class="tf-buttons">
+                                <button class="btn btn-tf" onclick="checkTF(this, false)">TRUE</button>
+                                <button class="btn btn-tf correct" onclick="checkTF(this, true)">FALSE</button>
+                            </div>
+                            <span class="tf-feedback">(Correction: 2 points)</span>
+                        </div>
+                        <div class="tf-item">
+                            <p class="tf-statement">3. Max moved to Monaco to have a quiet life.</p>
+                            <div class="tf-buttons">
+                                <button class="btn btn-tf correct" onclick="checkTF(this, true)">TRUE</button>
+                                <button class="btn btn-tf" onclick="checkTF(this, false)">FALSE</button>
+                            </div>
+                            <span class="tf-feedback"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PHASE 4: Speaking -->
+        <section id="phase4" class="phase-section">
+            <div class="phase-header">
+                <div class="phase-number">4</div>
+                <div class="phase-info">
+                    <h2>Speaking</h2>
+                    <span class="phase-time">10 Minutes</span>
+                </div>
+            </div>
+
+            <div class="learning-outcome-box">
+                <span class="outcome-code">E7.3.SP1</span>
+                <p>Students will be able to describe past events and experiences.</p>
+            </div>
+
+            <div class="activity-card">
+                <h3>🎤 Activity: "The Sports Interview Role-Play"</h3>
+
+                <div class="roleplay-setup">
+                    <div class="role-card role-a">
+                        <div class="role-icon">🏎️</div>
+                        <h4>Student A</h4>
+                        <p>You are <strong>Max Verstappen</strong></p>
+                        <p class="role-instruction">Use the timeline and reading text to answer questions.</p>
+                    </div>
+                    <div class="role-vs">VS</div>
+                    <div class="role-card role-b">
+                        <div class="role-icon">🎙️</div>
+                        <h4>Student B</h4>
+                        <p>You are a <strong>Sports Journalist</strong></p>
+                        <p class="role-instruction">Ask Max about his best and worst moments.</p>
+                    </div>
+                </div>
+
+                <!-- Example Audio -->
+                <div class="media-section">
+                    <h4>🔊 Example Dialogue (Listen First)</h4>
+                    <div class="audio-container">
+                        <audio id="dialogueAudio" controls>
+                            <source src="media/audio/example-dialogue.mp3" type="audio/mpeg">
+                        </audio>
+                        <div class="audio-placeholder">
+                            <span>🎵 Example Dialogue Audio: <code>media/audio/example-dialogue.mp3</code></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dialogue Guide -->
+                <div class="dialogue-section">
+                    <h4>📋 Dialogue Guide</h4>
+                    <div class="dialogue-box">
+                        <div class="dialogue-line journalist">
+                            <span class="speaker">Journalist:</span>
+                            <p>"Hello Max. Can I ask you about your career?"</p>
+                        </div>
+                        <div class="dialogue-line max">
+                            <span class="speaker">Max:</span>
+                            <p>"Sure."</p>
+                        </div>
+                        <div class="dialogue-line journalist">
+                            <span class="speaker">Journalist:</span>
+                            <p>"When were you born?"</p>
+                        </div>
+                        <div class="dialogue-line max">
+                            <span class="speaker">Max:</span>
+                            <p>"I was born in <strong>1997</strong>."</p>
+                        </div>
+                        <div class="dialogue-line journalist">
+                            <span class="speaker">Journalist:</span>
+                            <p>"Tell me about <strong>2021</strong>. What happened?"</p>
+                        </div>
+                        <div class="dialogue-line max">
+                            <span class="speaker">Max:</span>
+                            <p>"It was amazing. I <strong>beat</strong> Lewis Hamilton on the <strong>last lap</strong>."</p>
+                        </div>
+                        <div class="dialogue-line journalist">
+                            <span class="speaker">Journalist:</span>
+                            <p>"And what happened in <strong>2025</strong>?"</p>
+                        </div>
+                        <div class="dialogue-line max">
+                            <span class="speaker">Max:</span>
+                            <p>"That was sad. I <strong>lost</strong> to Lando Norris."</p>
+                        </div>
+                        <div class="dialogue-line journalist">
+                            <span class="speaker">Journalist:</span>
+                            <p>"Why did you lose?"</p>
+                        </div>
+                        <div class="dialogue-line max">
+                            <span class="speaker">Max:</span>
+                            <p>"<strong>Because</strong> Lando was very fast. I lost by <strong>2 points</strong>."</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Practice Timer -->
+                <div class="practice-section">
+                    <h4>⏱️ Practice Time</h4>
+                    <div class="practice-timer">
+                        <span id="practiceTimer">05:00</span>
+                        <div class="practice-controls">
+                            <button class="btn btn-practice" onclick="startPracticeTimer()">Start Practice</button>
+                            <button class="btn btn-practice" onclick="resetPracticeTimer()">Reset</button>
+                        </div>
+                    </div>
+                    <p class="practice-note">Students work in pairs. Teacher monitors and takes notes.</p>
+                </div>
+
+                <!-- Teacher Notes -->
+                <div class="teacher-note-box">
+                    <h4>👨‍🏫 Teacher Notes</h4>
+                    <ul>
+                        <li>Monitor the pairs during practice</li>
+                        <li>Do not correct errors instantly; note them down for later feedback</li>
+                        <li>Encouraging communication is the priority</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- HOMEWORK Section -->
+        <section id="homework" class="phase-section homework-section">
+            <div class="phase-header">
+                <div class="phase-number">📚</div>
+                <div class="phase-info">
+                    <h2>Assignment / Homework</h2>
+                    <span class="phase-time">Take Home</span>
+                </div>
+            </div>
+
+            <div class="activity-card">
+                <h3>✍️ Task: "Biography of a Legend"</h3>
+
+                <div class="homework-instruction">
+                    <p>Choose a different sports star or famous person and write a short biography (4-5 sentences).</p>
+
+                    <div class="example-persons">
+                        <div class="person-suggestion">⚽ Ronaldo</div>
+                        <div class="person-suggestion">🔬 Marie Curie</div>
+                        <div class="person-suggestion">🇹🇷 Atatürk</div>
+                        <div class="person-suggestion">🎾 Serena Williams</div>
+                        <div class="person-suggestion">🚀 Elon Musk</div>
+                    </div>
+
+                    <div class="homework-requirements">
+                        <h4>Your biography MUST include:</h4>
+                        <ol>
+                            <li><strong>When</strong> they were born.</li>
+                            <li><strong>Why</strong> they moved or worked hard (use <em>'to'</em> or <em>'because'</em>).</li>
+                            <li>One big <strong>success</strong> (award) or event.</li>
+                        </ol>
+                    </div>
+
+                    <div class="homework-example">
+                        <h4>📝 Example:</h4>
+                        <blockquote>
+                            "Cristiano Ronaldo <strong>was born</strong> in 1985 in Portugal. He <strong>grew up</strong> in a small town called Funchal. He <strong>moved</strong> to Manchester <strong>to</strong> play professional football. He won many <strong>awards</strong> <strong>because</strong> he trained very hard every day."
+                        </blockquote>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Assessment Notes -->
+            <div class="activity-card assessment-card">
+                <h3>📊 Teacher's Notes for Assessment</h3>
+                <div class="assessment-checklist">
+                    <div class="checklist-item">
+                        <input type="checkbox" id="check1">
+                        <label for="check1">Check if students use the past tense correctly (<em>was born, moved, lost, beat</em>)</label>
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox" id="check2">
+                        <label for="check2">Ensure students use "to" or "because" for explanations (e.g., <em>moved to Monaco</em>)</label>
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox" id="check3">
+                        <label for="check3">Verify correct use of dates and names</label>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <p>7th Grade English - Unit 3: Biographies</p>
+            <p>A2 Level | Ministry of National Education Curriculum</p>
+        </div>
+    </footer>
+
+    <!-- Audio elements for vocabulary -->
+    <div class="hidden-audio">
+        <audio id="audio-born" src="media/audio/vocab/born.mp3"></audio>
+        <audio id="audio-grow-up" src="media/audio/vocab/grow-up.mp3"></audio>
+        <audio id="audio-move" src="media/audio/vocab/move.mp3"></audio>
+        <audio id="audio-beat" src="media/audio/vocab/beat.mp3"></audio>
+        <audio id="audio-lose" src="media/audio/vocab/lose.mp3"></audio>
+        <audio id="audio-award" src="media/audio/vocab/award.mp3"></audio>
+        <audio id="audio-brilliant" src="media/audio/vocab/brilliant.mp3"></audio>
+        <audio id="audio-last-lap" src="media/audio/vocab/last-lap.mp3"></audio>
+        <audio id="audio-point" src="media/audio/vocab/point.mp3"></audio>
+    </div>
+
+    <script src="js/script.js"></script>
+</body>
+</html>
