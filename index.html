@@ -8,13 +8,12 @@
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <!-- Racing Background Effects -->
+    <!-- Racing Background -->
     <div class="racing-bg">
         <div class="track-lines"></div>
-        <div class="speed-particles"></div>
     </div>
 
-    <!-- Top Navigation Bar -->
+    <!-- Top Bar -->
     <nav class="top-bar">
         <div class="logo">
             <span class="logo-number">33</span>
@@ -33,90 +32,93 @@
         </div>
     </nav>
 
-    <!-- Slide Navigation Dots -->
+    <!-- Slide Indicators -->
     <div class="slide-indicators">
-        <button class="indicator active" data-slide="0" title="Start"></button>
-        <button class="indicator" data-slide="1" title="Phase 1: Warm-Up"></button>
-        <button class="indicator" data-slide="2" title="Phase 1: Video"></button>
-        <button class="indicator" data-slide="3" title="Phase 1: Vocabulary"></button>
-        <button class="indicator" data-slide="4" title="Phase 2: Listening"></button>
-        <button class="indicator" data-slide="5" title="Phase 2: Abu Dhabi"></button>
-        <button class="indicator" data-slide="6" title="Phase 2: Timeline"></button>
-        <button class="indicator" data-slide="7" title="Phase 3: Reading"></button>
-        <button class="indicator" data-slide="8" title="Phase 3: Questions"></button>
-        <button class="indicator" data-slide="9" title="Phase 4: Speaking"></button>
-        <button class="indicator" data-slide="10" title="Homework"></button>
+        <button class="indicator active" data-slide="0"></button>
+        <button class="indicator" data-slide="1"></button>
+        <button class="indicator" data-slide="2"></button>
+        <button class="indicator" data-slide="3"></button>
+        <button class="indicator" data-slide="4"></button>
+        <button class="indicator" data-slide="5"></button>
+        <button class="indicator" data-slide="6"></button>
+        <button class="indicator" data-slide="7"></button>
+        <button class="indicator" data-slide="8"></button>
+        <button class="indicator" data-slide="9"></button>
+        <button class="indicator" data-slide="10"></button>
+        <button class="indicator" data-slide="11"></button>
+        <button class="indicator" data-slide="12"></button>
     </div>
 
-    <!-- Main Slides Container -->
+    <!-- Slides -->
     <main class="slides-container">
 
-        <!-- SLIDE 0: Title Slide -->
+        <!-- ==================== SLIDE 0: TITLE ==================== -->
         <section class="slide active" data-slide="0">
             <div class="slide-content title-slide">
-                <div class="f1-flag"></div>
                 <div class="title-content">
                     <div class="race-number">33</div>
                     <h1 class="main-title">THE RACER'S JOURNEY</h1>
                     <h2 class="sub-title">Highs & Lows</h2>
                     <div class="title-divider"></div>
                     <div class="lesson-badges">
-                        <span class="badge listening">🎧 Listening</span>
-                        <span class="badge reading">📖 Reading</span>
-                        <span class="badge speaking">🗣️ Speaking</span>
+                        <span class="badge">🎧 Listening</span>
+                        <span class="badge">📖 Reading</span>
+                        <span class="badge">🗣️ Speaking</span>
                     </div>
                     <p class="level-info">A2 Level • 40 Minutes</p>
                 </div>
                 <div class="start-prompt">
-                    <span>Press</span>
-                    <kbd>→</kbd>
-                    <span>or click to start</span>
+                    <span>Press → or click to start</span>
                 </div>
             </div>
         </section>
 
-        <!-- SLIDE 1: Phase 1 - Mystery Game -->
+        <!-- ==================== SLIDE 1: WARM-UP MYSTERY ==================== -->
         <section class="slide" data-slide="1">
             <div class="slide-header">
                 <div class="phase-tag">PHASE 1</div>
                 <h2>Who is that person?</h2>
                 <span class="time-tag">5 MIN</span>
             </div>
-            <div class="slide-content mystery-slide">
-                <div class="mystery-card">
-                    <div class="mystery-image-wrapper">
-                        <div class="mystery-image" id="mysteryImage">
-                            <div class="blur-overlay" id="blurOverlay"></div>
-                            <div class="question-mark" id="questionMark">?</div>
+            <div class="slide-content">
+                <div class="mystery-container">
+                    <div class="mystery-box">
+                        <div class="mystery-photo" id="mysteryPhoto">
+                            <div class="mystery-blur" id="mysteryBlur">
+                                <span class="big-question">?</span>
+                            </div>
+                            <div class="reveal-text hidden" id="revealText">
+                                <span>MAX</span>
+                                <span>VERSTAPPEN</span>
+                            </div>
                         </div>
-                        <div class="reveal-name hidden" id="revealName">MAX VERSTAPPEN</div>
                     </div>
-                </div>
-                <div class="clues-panel">
-                    <h3>🔍 CLUES</h3>
-                    <div class="clue-item" id="clue1">
-                        <span class="clue-num">1</span>
-                        <p>He <strong>was born</strong> in 1997 in Belgium.</p>
-                    </div>
-                    <div class="clue-item" id="clue2">
-                        <span class="clue-num">2</span>
-                        <p>He <strong>grew up</strong> in a racing family.</p>
-                    </div>
-                    <div class="clue-item" id="clue3">
-                        <span class="clue-num">3</span>
-                        <p>He drives in <strong>Formula 1</strong>.</p>
-                    </div>
-                    <div class="clue-buttons">
-                        <button class="btn-clue" onclick="showClue(1)">Clue 1</button>
-                        <button class="btn-clue" onclick="showClue(2)">Clue 2</button>
-                        <button class="btn-clue" onclick="showClue(3)">Clue 3</button>
-                        <button class="btn-reveal" onclick="revealPerson()">🏁 REVEAL</button>
+                    <div class="clues-box">
+                        <h3>🔍 CLUES</h3>
+                        <div class="clue hidden" data-clue="1">
+                            <span class="clue-number">1</span>
+                            <p>He <strong>was born</strong> in <strong>1997</strong> in Belgium.</p>
+                        </div>
+                        <div class="clue hidden" data-clue="2">
+                            <span class="clue-number">2</span>
+                            <p>He <strong>grew up</strong> in a racing family. His father was a driver.</p>
+                        </div>
+                        <div class="clue hidden" data-clue="3">
+                            <span class="clue-number">3</span>
+                            <p>He drives in <strong>Formula 1</strong> and wears number <strong>33</strong>.</p>
+                        </div>
+                        <div class="clue-buttons">
+                            <button class="btn-clue" onclick="showClue(1)">Clue 1</button>
+                            <button class="btn-clue" onclick="showClue(2)">Clue 2</button>
+                            <button class="btn-clue" onclick="showClue(3)">Clue 3</button>
+                            <button class="btn-reveal" onclick="revealMystery()">🏁 REVEAL!</button>
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- SLIDE 2: Phase 1 - Introduction Video -->
+        <!-- ==================== SLIDE 2: INTRO VIDEO ==================== -->
         <section class="slide" data-slide="2">
             <div class="slide-header">
                 <div class="phase-tag">PHASE 1</div>
@@ -124,20 +126,21 @@
                 <span class="time-tag">VIDEO</span>
             </div>
             <div class="slide-content video-slide">
-                <div class="video-frame">
-                    <video id="introVideo" controls poster="images/verstappen-poster.svg">
+                <div class="video-wrapper">
+                    <video controls id="introVideo">
                         <source src="media/videos/verstappen-intro.mp4" type="video/mp4">
                     </video>
-                    <div class="video-overlay" id="introOverlay">
-                        <div class="play-button">▶</div>
-                        <p>Click to play video</p>
-                        <small>media/videos/verstappen-intro.mp4</small>
+                    <div class="video-placeholder" onclick="this.style.display='none'">
+                        <div class="play-icon">▶</div>
+                        <h3>Max Verstappen - Introduction</h3>
+                        <p>Click to play</p>
+                        <small>📁 media/videos/verstappen-intro.mp4</small>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- SLIDE 3: Phase 1 - Vocabulary -->
+        <!-- ==================== SLIDE 3: VOCABULARY ==================== -->
         <section class="slide" data-slide="3">
             <div class="slide-header">
                 <div class="phase-tag">PHASE 1</div>
@@ -147,333 +150,442 @@
             <div class="slide-content vocab-slide">
                 <div class="vocab-grid">
                     <div class="vocab-card" onclick="speakWord('born')">
-                        <div class="vocab-icon">👶</div>
+                        <div class="vocab-emoji">👶</div>
                         <div class="vocab-word">born</div>
-                        <div class="vocab-tr">doğmak</div>
-                        <div class="vocab-example">"He was born in 1997"</div>
+                        <div class="vocab-turkish">doğmak</div>
+                        <div class="vocab-sentence">"He was <u>born</u> in 1997"</div>
                     </div>
                     <div class="vocab-card" onclick="speakWord('grow up')">
-                        <div class="vocab-icon">📈</div>
+                        <div class="vocab-emoji">📈</div>
                         <div class="vocab-word">grow up</div>
-                        <div class="vocab-tr">büyümek</div>
-                        <div class="vocab-example">"He grew up in Belgium"</div>
+                        <div class="vocab-turkish">büyümek</div>
+                        <div class="vocab-sentence">"He <u>grew up</u> in Belgium"</div>
                     </div>
                     <div class="vocab-card" onclick="speakWord('move')">
-                        <div class="vocab-icon">🚚</div>
+                        <div class="vocab-emoji">🚚</div>
                         <div class="vocab-word">move</div>
-                        <div class="vocab-tr">taşınmak</div>
-                        <div class="vocab-example">"He moved to Monaco"</div>
+                        <div class="vocab-turkish">taşınmak</div>
+                        <div class="vocab-sentence">"He <u>moved</u> to Monaco"</div>
                     </div>
                     <div class="vocab-card" onclick="speakWord('beat')">
-                        <div class="vocab-icon">🏆</div>
+                        <div class="vocab-emoji">🏆</div>
                         <div class="vocab-word">beat</div>
-                        <div class="vocab-tr">yenmek</div>
-                        <div class="vocab-example">"He beat Hamilton"</div>
+                        <div class="vocab-turkish">yenmek</div>
+                        <div class="vocab-sentence">"He <u>beat</u> Hamilton"</div>
                     </div>
                     <div class="vocab-card" onclick="speakWord('lose')">
-                        <div class="vocab-icon">😔</div>
+                        <div class="vocab-emoji">😔</div>
                         <div class="vocab-word">lose</div>
-                        <div class="vocab-tr">kaybetmek</div>
-                        <div class="vocab-example">"He lost the race"</div>
+                        <div class="vocab-turkish">kaybetmek</div>
+                        <div class="vocab-sentence">"He <u>lost</u> the race"</div>
                     </div>
                     <div class="vocab-card" onclick="speakWord('award')">
-                        <div class="vocab-icon">🎖️</div>
+                        <div class="vocab-emoji">🎖️</div>
                         <div class="vocab-word">award</div>
-                        <div class="vocab-tr">ödül</div>
-                        <div class="vocab-example">"He won an award"</div>
+                        <div class="vocab-turkish">ödül</div>
+                        <div class="vocab-sentence">"He won an <u>award</u>"</div>
                     </div>
                     <div class="vocab-card" onclick="speakWord('brilliant')">
-                        <div class="vocab-icon">⭐</div>
+                        <div class="vocab-emoji">⭐</div>
                         <div class="vocab-word">brilliant</div>
-                        <div class="vocab-tr">parlak</div>
-                        <div class="vocab-example">"A brilliant driver"</div>
+                        <div class="vocab-turkish">parlak, harika</div>
+                        <div class="vocab-sentence">"A <u>brilliant</u> driver"</div>
                     </div>
                     <div class="vocab-card" onclick="speakWord('last lap')">
-                        <div class="vocab-icon">🏁</div>
+                        <div class="vocab-emoji">🏁</div>
                         <div class="vocab-word">last lap</div>
-                        <div class="vocab-tr">son tur</div>
-                        <div class="vocab-example">"On the last lap"</div>
+                        <div class="vocab-turkish">son tur</div>
+                        <div class="vocab-sentence">"On the <u>last lap</u>"</div>
                     </div>
                     <div class="vocab-card" onclick="speakWord('point')">
-                        <div class="vocab-icon">🔢</div>
+                        <div class="vocab-emoji">🔢</div>
                         <div class="vocab-word">point</div>
-                        <div class="vocab-tr">puan</div>
-                        <div class="vocab-example">"Lost by 2 points"</div>
+                        <div class="vocab-turkish">puan</div>
+                        <div class="vocab-sentence">"He lost by 2 <u>points</u>"</div>
                     </div>
                 </div>
+                <p class="vocab-tip">💡 Click on a card to hear the pronunciation!</p>
             </div>
         </section>
 
-        <!-- SLIDE 4: Phase 2 - Listening -->
+        <!-- ==================== SLIDE 4: LISTENING ==================== -->
         <section class="slide" data-slide="4">
             <div class="slide-header">
                 <div class="phase-tag phase-2">PHASE 2</div>
-                <h2>Timeline of a Champion</h2>
+                <h2>Listening: Timeline of a Champion</h2>
                 <span class="time-tag">10 MIN</span>
             </div>
             <div class="slide-content listening-slide">
-                <div class="learning-outcome">
+                <div class="outcome-box">
                     <span class="outcome-code">E7.3.L1</span>
-                    <p>Recognize specific information about past events and dates</p>
+                    <span>Recognize specific information about past events and dates</span>
                 </div>
-                <div class="audio-player-card">
-                    <div class="audio-visual">
-                        <div class="sound-wave">
-                            <span></span><span></span><span></span><span></span><span></span>
-                            <span></span><span></span><span></span><span></span><span></span>
-                        </div>
+
+                <div class="audio-card">
+                    <div class="audio-waves">
+                        <span></span><span></span><span></span><span></span><span></span>
+                        <span></span><span></span><span></span><span></span><span></span>
                     </div>
                     <audio id="listeningAudio" src="media/audio/verstappen-story.mp3"></audio>
-                    <div class="audio-controls">
-                        <button class="audio-btn" onclick="playAudio()">▶ PLAY</button>
-                        <button class="audio-btn" onclick="pauseAudio()">⏸ PAUSE</button>
-                        <button class="audio-btn" onclick="restartAudio()">↺ RESTART</button>
-                        <button class="audio-btn slow" onclick="slowAudio()">🐢 SLOW</button>
+                    <div class="audio-buttons">
+                        <button onclick="playListening()">▶ PLAY</button>
+                        <button onclick="pauseListening()">⏸ PAUSE</button>
+                        <button onclick="restartListening()">↺ RESTART</button>
+                        <button onclick="slowListening()">🐢 SLOW</button>
                     </div>
-                    <p class="audio-note">media/audio/verstappen-story.mp3</p>
+                    <p class="audio-file">📁 media/audio/verstappen-story.mp3</p>
                 </div>
-                <div class="transcript-toggle">
-                    <button class="btn-transcript" onclick="toggleTranscript()">📜 SHOW TRANSCRIPT</button>
-                </div>
-                <div class="transcript-box hidden" id="transcript">
-                    <p>"Max Verstappen has a very exciting life story. He <strong>was born</strong> in Belgium in <strong>1997</strong>. He was a <strong>brilliant</strong> child who loved racing.</p>
-                    <p>He <strong>moved</strong> to the Formula 1 team when he was very young, in <strong>2015</strong>. He wanted to be the best.</p>
-                    <p>His most famous race was in <strong>2021</strong>. It was the Abu Dhabi Grand Prix. He was racing against Lewis Hamilton. It was a very difficult race. But on the <strong>last lap</strong>, Max passed Hamilton. He <strong>beat</strong> him and won his first big <strong>award</strong>: The World Championship."</p>
+
+                <div class="transcript-section">
+                    <button class="btn-transcript" onclick="toggleTranscript()">📜 Show/Hide Transcript</button>
+                    <div class="transcript-text hidden" id="transcriptBox">
+                        <p>"Max Verstappen has a very exciting life story. He <mark>was born</mark> in Belgium in <mark>1997</mark>. He was a <mark>brilliant</mark> child who loved racing.</p>
+                        <p>He <mark>moved</mark> to the Formula 1 team when he was very young, in <mark>2015</mark>. He wanted to be the best.</p>
+                        <p>His most famous race was in <mark>2021</mark>. It was the Abu Dhabi Grand Prix. He was racing against Lewis Hamilton. It was a very difficult race. But on the <mark>last lap</mark>, Max passed Hamilton. He <mark>beat</mark> him and won his first big <mark>award</mark>: The World Championship. It was incredible."</p>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <!-- SLIDE 5: Phase 2 - Abu Dhabi Video -->
+        <!-- ==================== SLIDE 5: LISTENING COMPREHENSION ==================== -->
         <section class="slide" data-slide="5">
+            <div class="slide-header">
+                <div class="phase-tag phase-2">PHASE 2</div>
+                <h2>Listening Comprehension</h2>
+                <span class="time-tag">ACTIVITY</span>
+            </div>
+            <div class="slide-content activity-slide">
+                <h3>📝 Fill in the Timeline</h3>
+                <p class="instruction">Listen again and complete the missing information:</p>
+
+                <div class="timeline-activity">
+                    <div class="timeline-row">
+                        <div class="timeline-year-box">1997</div>
+                        <div class="timeline-arrow">→</div>
+                        <div class="timeline-answer-box">
+                            <span>Born in</span>
+                            <input type="text" id="ans1" placeholder="?" class="answer-input" data-answer="belgium">
+                            <button onclick="checkInput('ans1')" class="check-btn">✓</button>
+                        </div>
+                    </div>
+
+                    <div class="timeline-row">
+                        <div class="timeline-year-box">2015</div>
+                        <div class="timeline-arrow">→</div>
+                        <div class="timeline-answer-box">
+                            <span>Moved to</span>
+                            <input type="text" id="ans2" placeholder="?" class="answer-input" data-answer="formula 1">
+                            <button onclick="checkInput('ans2')" class="check-btn">✓</button>
+                        </div>
+                    </div>
+
+                    <div class="timeline-row special">
+                        <div class="timeline-year-box gold">2021</div>
+                        <div class="timeline-arrow">→</div>
+                        <div class="timeline-answer-box">
+                            <span>Beat</span>
+                            <input type="text" id="ans3" placeholder="?" class="answer-input" data-answer="hamilton">
+                            <span>on the</span>
+                            <input type="text" id="ans4" placeholder="?" class="answer-input" data-answer="last lap">
+                            <button onclick="checkInput('ans3'); checkInput('ans4');" class="check-btn">✓</button>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="btn-show-answers" onclick="showAllAnswers()">Show All Answers</button>
+            </div>
+        </section>
+
+        <!-- ==================== SLIDE 6: ABU DHABI VIDEO ==================== -->
+        <section class="slide" data-slide="6">
             <div class="slide-header">
                 <div class="phase-tag phase-2">PHASE 2</div>
                 <h2>Abu Dhabi 2021 - The Last Lap</h2>
                 <span class="time-tag">VIDEO</span>
             </div>
             <div class="slide-content video-slide">
-                <div class="video-frame championship">
-                    <video id="abuDhabiVideo" controls poster="images/abu-dhabi-poster.svg">
+                <div class="video-wrapper championship">
+                    <video controls id="abuDhabiVideo">
                         <source src="media/videos/abu-dhabi-2021.mp4" type="video/mp4">
                     </video>
-                    <div class="video-overlay" id="abuDhabiOverlay">
+                    <div class="video-placeholder gold" onclick="this.style.display='none'">
                         <div class="trophy-icon">🏆</div>
-                        <h3>WORLD CHAMPION</h3>
-                        <p>Click to watch the historic moment</p>
-                        <small>media/videos/abu-dhabi-2021.mp4</small>
+                        <h3>WORLD CHAMPION 2021</h3>
+                        <p>The historic last lap overtake</p>
+                        <small>📁 media/videos/abu-dhabi-2021.mp4</small>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- SLIDE 6: Phase 2 - Timeline Activity -->
-        <section class="slide" data-slide="6">
-            <div class="slide-header">
-                <div class="phase-tag phase-2">PHASE 2</div>
-                <h2>Fill the Timeline</h2>
-                <span class="time-tag">ACTIVITY</span>
-            </div>
-            <div class="slide-content timeline-slide">
-                <div class="timeline-track">
-                    <div class="timeline-item">
-                        <div class="timeline-year">1997</div>
-                        <div class="timeline-card">
-                            <p>Born in <input type="text" class="timeline-input" id="t1" data-answer="belgium" placeholder="?"></p>
-                            <button class="check-btn" onclick="checkAnswer('t1')">✓</button>
-                        </div>
-                    </div>
-                    <div class="timeline-connector"></div>
-                    <div class="timeline-item">
-                        <div class="timeline-year">2015</div>
-                        <div class="timeline-card">
-                            <p>Moved to <input type="text" class="timeline-input" id="t2" data-answer="formula 1" placeholder="?"></p>
-                            <button class="check-btn" onclick="checkAnswer('t2')">✓</button>
-                        </div>
-                    </div>
-                    <div class="timeline-connector"></div>
-                    <div class="timeline-item special">
-                        <div class="timeline-year">2021</div>
-                        <div class="timeline-card">
-                            <p>Beat <input type="text" class="timeline-input" id="t3" data-answer="hamilton" placeholder="?"></p>
-                            <p>on the <input type="text" class="timeline-input" id="t4" data-answer="last lap" placeholder="?"></p>
-                            <button class="check-btn" onclick="checkAnswer('t3'); checkAnswer('t4');">✓</button>
-                        </div>
-                    </div>
-                </div>
-                <button class="btn-reveal-all" onclick="revealAllTimeline()">SHOW ALL ANSWERS</button>
-            </div>
-        </section>
-
-        <!-- SLIDE 7: Phase 3 - Reading -->
+        <!-- ==================== SLIDE 7: READING TEXT ==================== -->
         <section class="slide" data-slide="7">
             <div class="slide-header">
                 <div class="phase-tag phase-3">PHASE 3</div>
-                <h2>The Heartbreak of 2025</h2>
+                <h2>Reading: The Heartbreak of 2025</h2>
                 <span class="time-tag">15 MIN</span>
             </div>
             <div class="slide-content reading-slide">
-                <div class="learning-outcome">
+                <div class="outcome-box">
                     <span class="outcome-code">E7.3.R1</span>
-                    <p>Spot specific information about names and dates in written texts</p>
+                    <span>Spot specific information about names and dates in written texts</span>
                 </div>
-                <div class="magazine-card">
+
+                <div class="reading-card">
                     <div class="magazine-header">
-                        <span class="mag-logo">F1 WEEKLY</span>
-                        <span class="mag-date">2025</span>
+                        <span class="mag-name">F1 WEEKLY</span>
+                        <span class="mag-year">2025</span>
                     </div>
-                    <h3 class="mag-title">THE 2025 SEASON: SO CLOSE!</h3>
-                    <div class="mag-content">
-                        <p>After his big wins, Max Verstappen wanted to win another trophy in <mark class="hl-date">2025</mark>. He trained very hard every day <mark class="hl-reason">to be</mark> strong. He <mark class="hl-vocab">moved</mark> to Monaco <mark class="hl-reason">to have</mark> a quiet life and focus on racing.</p>
-                        <p>The 2025 season was a big battle. <mark class="hl-name">Lando Norris</mark> was very fast. Max tried his best to win.</p>
-                        <p>In the final race, everyone watched the points carefully. Max drove a <mark class="hl-vocab">brilliant</mark> race, but it was not enough. He <mark class="hl-vocab">lost</mark> the championship to <mark class="hl-name">Lando Norris</mark>. He lost by just <mark class="hl-number">2 points</mark>.</p>
-                        <p>Max was sad <mark class="hl-reason">because</mark> he wanted to win. But he congratulated Lando.</p>
+                    <h3 class="article-title">THE 2025 SEASON: SO CLOSE!</h3>
+                    <div class="article-body">
+                        <p>After his big wins, Max Verstappen wanted to win another trophy in <span class="hl blue">2025</span>. He trained very hard every day <span class="hl pink">to be</span> strong. He <span class="hl green">moved</span> to Monaco <span class="hl pink">to have</span> a quiet life and focus on racing.</p>
+
+                        <p>The 2025 season was a big battle. <span class="hl purple">Lando Norris</span> was very fast. Max tried his best to win.</p>
+
+                        <p>In the final race, everyone watched the points carefully. Max drove a <span class="hl green">brilliant</span> race, but it was not enough. He <span class="hl green">lost</span> the championship to <span class="hl purple">Lando Norris</span>. He lost by just <span class="hl orange">2 points</span>.</p>
+
+                        <p>Max was sad <span class="hl pink">because</span> he wanted to win. But he congratulated Lando. He promised to come back next year.</p>
                     </div>
-                    <div class="mag-legend">
-                        <span><mark class="hl-date">Dates</mark></span>
-                        <span><mark class="hl-name">Names</mark></span>
-                        <span><mark class="hl-vocab">Vocabulary</mark></span>
-                        <span><mark class="hl-reason">to/because</mark></span>
+                    <div class="color-legend">
+                        <span><span class="hl blue">Dates</span></span>
+                        <span><span class="hl purple">Names</span></span>
+                        <span><span class="hl green">Vocabulary</span></span>
+                        <span><span class="hl pink">to / because</span></span>
+                        <span><span class="hl orange">Numbers</span></span>
                     </div>
-                </div>
-                <div class="video-mini">
-                    <video id="season2025Video" controls poster="images/2025-poster.svg">
-                        <source src="media/videos/2025-season.mp4" type="video/mp4">
-                    </video>
                 </div>
             </div>
         </section>
 
-        <!-- SLIDE 8: Phase 3 - Questions -->
+        <!-- ==================== SLIDE 8: READING COMPREHENSION ==================== -->
         <section class="slide" data-slide="8">
             <div class="slide-header">
                 <div class="phase-tag phase-3">PHASE 3</div>
-                <h2>Comprehension Check</h2>
-                <span class="time-tag">QUIZ</span>
+                <h2>Reading Comprehension</h2>
+                <span class="time-tag">QUESTIONS</span>
             </div>
             <div class="slide-content quiz-slide">
-                <div class="quiz-container">
-                    <div class="quiz-card">
-                        <div class="quiz-num">Q1</div>
-                        <p class="quiz-question">Why did Max move to Monaco?</p>
+                <h3>📝 Task A: Answer the Questions</h3>
+
+                <div class="quiz-grid">
+                    <div class="quiz-box">
+                        <p class="quiz-q"><strong>Q1:</strong> Why did Max move to Monaco?</p>
                         <div class="quiz-options">
-                            <button class="quiz-opt" onclick="selectQuiz(this, false)">To be close to F1</button>
-                            <button class="quiz-opt correct" onclick="selectQuiz(this, true)">To have a quiet life</button>
-                            <button class="quiz-opt" onclick="selectQuiz(this, false)">To train with Lando</button>
+                            <button onclick="checkQuiz(this, false)">A) To be close to F1 races</button>
+                            <button onclick="checkQuiz(this, true)" class="correct">B) To have a quiet life</button>
+                            <button onclick="checkQuiz(this, false)">C) To train with Lando</button>
                         </div>
+                        <p class="quiz-answer hidden">✓ He moved to Monaco <strong>to have</strong> a quiet life.</p>
                     </div>
-                    <div class="quiz-card">
-                        <div class="quiz-num">Q2</div>
-                        <p class="quiz-question">Who won the 2025 championship?</p>
+
+                    <div class="quiz-box">
+                        <p class="quiz-q"><strong>Q2:</strong> Who won the 2025 championship?</p>
                         <div class="quiz-options">
-                            <button class="quiz-opt" onclick="selectQuiz(this, false)">Max Verstappen</button>
-                            <button class="quiz-opt correct" onclick="selectQuiz(this, true)">Lando Norris</button>
-                            <button class="quiz-opt" onclick="selectQuiz(this, false)">Lewis Hamilton</button>
+                            <button onclick="checkQuiz(this, false)">A) Max Verstappen</button>
+                            <button onclick="checkQuiz(this, true)" class="correct">B) Lando Norris</button>
+                            <button onclick="checkQuiz(this, false)">C) Lewis Hamilton</button>
                         </div>
+                        <p class="quiz-answer hidden">✓ <strong>Lando Norris</strong> won the championship.</p>
                     </div>
-                    <div class="quiz-card">
-                        <div class="quiz-num">Q3</div>
-                        <p class="quiz-question">How many points did Max lose by?</p>
+
+                    <div class="quiz-box">
+                        <p class="quiz-q"><strong>Q3:</strong> How many points did Max lose by?</p>
                         <div class="quiz-options">
-                            <button class="quiz-opt" onclick="selectQuiz(this, false)">10 points</button>
-                            <button class="quiz-opt correct" onclick="selectQuiz(this, true)">2 points</button>
-                            <button class="quiz-opt" onclick="selectQuiz(this, false)">5 points</button>
+                            <button onclick="checkQuiz(this, false)">A) 10 points</button>
+                            <button onclick="checkQuiz(this, true)" class="correct">B) 2 points</button>
+                            <button onclick="checkQuiz(this, false)">C) 5 points</button>
                         </div>
-                    </div>
-                </div>
-                <div class="tf-section">
-                    <h3>True or False?</h3>
-                    <div class="tf-items">
-                        <div class="tf-row">
-                            <span>Max won the 2025 championship.</span>
-                            <button class="tf-btn" onclick="checkTF(this, false)">TRUE</button>
-                            <button class="tf-btn correct" onclick="checkTF(this, true)">FALSE</button>
-                        </div>
-                        <div class="tf-row">
-                            <span>Max moved to Monaco to have a quiet life.</span>
-                            <button class="tf-btn correct" onclick="checkTF(this, true)">TRUE</button>
-                            <button class="tf-btn" onclick="checkTF(this, false)">FALSE</button>
-                        </div>
+                        <p class="quiz-answer hidden">✓ He lost by <strong>2 points</strong>.</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- SLIDE 9: Phase 4 - Speaking -->
+        <!-- ==================== SLIDE 9: TRUE/FALSE ==================== -->
         <section class="slide" data-slide="9">
             <div class="slide-header">
+                <div class="phase-tag phase-3">PHASE 3</div>
+                <h2>True or False?</h2>
+                <span class="time-tag">TASK B</span>
+            </div>
+            <div class="slide-content tf-slide">
+                <div class="tf-list">
+                    <div class="tf-item">
+                        <span class="tf-num">1</span>
+                        <p class="tf-statement">Max won the championship in 2025.</p>
+                        <div class="tf-buttons">
+                            <button onclick="checkTF(this, false)">TRUE</button>
+                            <button onclick="checkTF(this, true)" class="correct">FALSE</button>
+                        </div>
+                        <span class="tf-feedback"></span>
+                    </div>
+
+                    <div class="tf-item">
+                        <span class="tf-num">2</span>
+                        <p class="tf-statement">Lando Norris beat Max by 10 points.</p>
+                        <div class="tf-buttons">
+                            <button onclick="checkTF(this, false)">TRUE</button>
+                            <button onclick="checkTF(this, true)" class="correct">FALSE</button>
+                        </div>
+                        <span class="tf-feedback">(It was 2 points)</span>
+                    </div>
+
+                    <div class="tf-item">
+                        <span class="tf-num">3</span>
+                        <p class="tf-statement">Max moved to Monaco to have a quiet life.</p>
+                        <div class="tf-buttons">
+                            <button onclick="checkTF(this, true)" class="correct">TRUE</button>
+                            <button onclick="checkTF(this, false)">FALSE</button>
+                        </div>
+                        <span class="tf-feedback"></span>
+                    </div>
+
+                    <div class="tf-item">
+                        <span class="tf-num">4</span>
+                        <p class="tf-statement">Max was happy because he lost.</p>
+                        <div class="tf-buttons">
+                            <button onclick="checkTF(this, false)">TRUE</button>
+                            <button onclick="checkTF(this, true)" class="correct">FALSE</button>
+                        </div>
+                        <span class="tf-feedback">(He was sad)</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== SLIDE 10: SPEAKING ==================== -->
+        <section class="slide" data-slide="10">
+            <div class="slide-header">
                 <div class="phase-tag phase-4">PHASE 4</div>
-                <h2>The Sports Interview</h2>
+                <h2>Speaking: The Sports Interview</h2>
                 <span class="time-tag">10 MIN</span>
             </div>
             <div class="slide-content speaking-slide">
-                <div class="learning-outcome">
+                <div class="outcome-box">
                     <span class="outcome-code">E7.3.SP1</span>
-                    <p>Describe past events and experiences</p>
+                    <span>Describe past events and experiences</span>
                 </div>
-                <div class="roleplay-cards">
-                    <div class="role-card driver">
-                        <div class="role-icon">🏎️</div>
-                        <h4>STUDENT A</h4>
-                        <p>You are <strong>Max Verstappen</strong></p>
+
+                <div class="roles-container">
+                    <div class="role-box red">
+                        <div class="role-emoji">🏎️</div>
+                        <h4>Student A</h4>
+                        <p>You are <strong>MAX VERSTAPPEN</strong></p>
+                        <small>Answer the questions</small>
                     </div>
-                    <div class="vs-badge">VS</div>
-                    <div class="role-card journalist">
-                        <div class="role-icon">🎙️</div>
-                        <h4>STUDENT B</h4>
-                        <p>You are a <strong>Journalist</strong></p>
+                    <div class="vs">VS</div>
+                    <div class="role-box blue">
+                        <div class="role-emoji">🎙️</div>
+                        <h4>Student B</h4>
+                        <p>You are a <strong>JOURNALIST</strong></p>
+                        <small>Ask the questions</small>
                     </div>
                 </div>
-                <div class="dialogue-card">
-                    <div class="dialogue-line j"><span>Journalist:</span> "When were you born?"</div>
-                    <div class="dialogue-line m"><span>Max:</span> "I was born in <strong>1997</strong>."</div>
-                    <div class="dialogue-line j"><span>Journalist:</span> "Tell me about 2021."</div>
-                    <div class="dialogue-line m"><span>Max:</span> "I <strong>beat</strong> Hamilton on the <strong>last lap</strong>."</div>
-                    <div class="dialogue-line j"><span>Journalist:</span> "What happened in 2025?"</div>
-                    <div class="dialogue-line m"><span>Max:</span> "I <strong>lost</strong> to Norris by <strong>2 points</strong>."</div>
-                </div>
-                <div class="practice-timer-section">
-                    <div class="practice-time" id="practiceTimer">05:00</div>
-                    <div class="practice-btns">
-                        <button class="btn-practice" onclick="startPractice()">▶ START</button>
-                        <button class="btn-practice" onclick="resetPractice()">↺ RESET</button>
+
+                <div class="dialogue-example">
+                    <div class="dialogue-row journalist">
+                        <span class="speaker">Journalist:</span>
+                        <span class="text">"When were you born?"</span>
+                    </div>
+                    <div class="dialogue-row max">
+                        <span class="speaker">Max:</span>
+                        <span class="text">"I was born in <strong>1997</strong>."</span>
+                    </div>
+                    <div class="dialogue-row journalist">
+                        <span class="speaker">Journalist:</span>
+                        <span class="text">"Tell me about 2021. What happened?"</span>
+                    </div>
+                    <div class="dialogue-row max">
+                        <span class="speaker">Max:</span>
+                        <span class="text">"I <strong>beat</strong> Hamilton on the <strong>last lap</strong>!"</span>
+                    </div>
+                    <div class="dialogue-row journalist">
+                        <span class="speaker">Journalist:</span>
+                        <span class="text">"And what happened in 2025?"</span>
+                    </div>
+                    <div class="dialogue-row max">
+                        <span class="speaker">Max:</span>
+                        <span class="text">"I <strong>lost</strong> to Norris by <strong>2 points</strong>."</span>
+                    </div>
+                    <div class="dialogue-row journalist">
+                        <span class="speaker">Journalist:</span>
+                        <span class="text">"Why did you lose?"</span>
+                    </div>
+                    <div class="dialogue-row max">
+                        <span class="speaker">Max:</span>
+                        <span class="text">"<strong>Because</strong> Lando was very fast."</span>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- SLIDE 10: Homework -->
-        <section class="slide" data-slide="10">
+        <!-- ==================== SLIDE 11: PRACTICE TIMER ==================== -->
+        <section class="slide" data-slide="11">
+            <div class="slide-header">
+                <div class="phase-tag phase-4">PHASE 4</div>
+                <h2>Practice Time!</h2>
+                <span class="time-tag">PAIR WORK</span>
+            </div>
+            <div class="slide-content timer-slide">
+                <div class="practice-instructions">
+                    <p>👥 Work in pairs</p>
+                    <p>🔄 Switch roles after 2 minutes</p>
+                    <p>💬 Use the dialogue guide</p>
+                </div>
+
+                <div class="big-timer">
+                    <span id="practiceTimer">05:00</span>
+                </div>
+
+                <div class="timer-buttons">
+                    <button class="btn-timer start" onclick="startPractice()">▶ START</button>
+                    <button class="btn-timer reset" onclick="resetPractice()">↺ RESET</button>
+                </div>
+
+                <div class="teacher-note">
+                    <p>👨‍🏫 <strong>Teacher:</strong> Monitor pairs. Don't correct errors instantly - note them for later feedback.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== SLIDE 12: HOMEWORK ==================== -->
+        <section class="slide" data-slide="12">
             <div class="slide-header">
                 <div class="phase-tag phase-hw">HOMEWORK</div>
                 <h2>Biography of a Legend</h2>
                 <span class="time-tag">ASSIGNMENT</span>
             </div>
             <div class="slide-content homework-slide">
-                <div class="hw-card">
+                <div class="homework-card">
                     <h3>✍️ Your Task</h3>
                     <p>Choose a famous person and write a short biography (4-5 sentences).</p>
-                    <div class="person-options">
-                        <span class="person-chip">⚽ Ronaldo</span>
-                        <span class="person-chip">🔬 Marie Curie</span>
-                        <span class="person-chip">🇹🇷 Atatürk</span>
-                        <span class="person-chip">🎾 Serena Williams</span>
-                        <span class="person-chip">🚀 Elon Musk</span>
+
+                    <div class="person-chips">
+                        <span>⚽ Ronaldo</span>
+                        <span>🔬 Marie Curie</span>
+                        <span>🇹🇷 Atatürk</span>
+                        <span>🎾 Serena Williams</span>
+                        <span>🏀 Michael Jordan</span>
                     </div>
-                    <div class="hw-requirements">
-                        <h4>Include:</h4>
-                        <ol>
-                            <li><strong>When</strong> they were born</li>
-                            <li><strong>Why</strong> they worked hard (use <em>to</em> or <em>because</em>)</li>
-                            <li>One big <strong>success</strong> or award</li>
-                        </ol>
+
+                    <div class="hw-checklist">
+                        <h4>Your biography MUST include:</h4>
+                        <ul>
+                            <li>✓ <strong>When</strong> they were born</li>
+                            <li>✓ <strong>Why</strong> they worked hard (use <em>to</em> or <em>because</em>)</li>
+                            <li>✓ One big <strong>success</strong> or award</li>
+                        </ul>
                     </div>
+
                     <div class="hw-example">
                         <h4>Example:</h4>
-                        <blockquote>"Cristiano Ronaldo <strong>was born</strong> in 1985 in Portugal. He <strong>moved</strong> to Manchester <strong>to</strong> play football. He won many <strong>awards</strong> <strong>because</strong> he trained very hard."</blockquote>
+                        <p>"Cristiano Ronaldo <strong>was born</strong> in 1985 in Portugal. He <strong>grew up</strong> in a small town. He <strong>moved</strong> to Manchester <strong>to</strong> play professional football. He won many <strong>awards</strong> <strong>because</strong> he trained very hard every day."</p>
                     </div>
                 </div>
-                <div class="finish-badge">
-                    <div class="checkered-flag">🏁</div>
-                    <h3>FINISH!</h3>
+
+                <div class="finish-section">
+                    <div class="checkered">🏁</div>
+                    <h2>FINISH!</h2>
                     <p>Great job today!</p>
                 </div>
             </div>
