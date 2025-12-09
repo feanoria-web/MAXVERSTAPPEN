@@ -5,7 +5,7 @@
 
 // ===== SLIDE NAVIGATION =====
 let currentSlide = 0;
-const totalSlides = 15;
+const totalSlides = 17;
 
 function goToSlide(index) {
     if (index < 0 || index >= totalSlides) return;

@@ -1068,6 +1068,143 @@ mark.red { background: #dc2626; color: white; padding: 0.1rem 0.35rem; border-ra
 .progress-bar { position: fixed; bottom: 0; left: 0; width: 100%; height: 6px; background: rgba(0,0,0,0.5); z-index: 1000; }
 .progress-fill { height: 100%; background: linear-gradient(90deg, var(--orange), var(--redbull-red)); width: 0%; transition: width 0.5s ease; }
 
+/* ===== BIOGRAPHY SLIDES ===== */
+.bio-slide {
+    align-items: flex-start;
+}
+
+.bio-header {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    width: 100%;
+    max-width: 800px;
+    padding: 1.5rem;
+    border-radius: 15px;
+    margin-bottom: 1.5rem;
+}
+
+.bio-header.hamilton-bio {
+    background: linear-gradient(135deg, rgba(0, 210, 190, 0.2), rgba(0, 0, 0, 0.3));
+    border: 2px solid var(--mercedes-teal);
+}
+
+.bio-header.verstappen-bio {
+    background: linear-gradient(135deg, rgba(255, 128, 0, 0.2), rgba(30, 58, 138, 0.3));
+    border: 2px solid var(--orange);
+}
+
+.bio-photo .photo-placeholder {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-display);
+    font-size: 2.5rem;
+    font-weight: 900;
+    background: linear-gradient(135deg, var(--mercedes-teal), #006d62);
+    color: var(--white);
+    box-shadow: 0 0 20px rgba(0, 210, 190, 0.5);
+}
+
+.bio-photo .photo-placeholder.orange {
+    background: linear-gradient(135deg, var(--orange), var(--redbull-red));
+    box-shadow: 0 0 20px rgba(255, 128, 0, 0.5);
+}
+
+.bio-title h2 {
+    font-family: var(--font-display);
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+}
+
+.bio-subtitle {
+    color: var(--gold);
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.bio-tags {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+}
+
+.bio-tags .tag {
+    background: rgba(255,255,255,0.1);
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    color: var(--silver);
+}
+
+.bio-text {
+    width: 100%;
+    max-width: 800px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 15px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.bio-text p {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    margin-bottom: 1rem;
+    text-align: justify;
+}
+
+.bio-text p:last-child {
+    margin-bottom: 0;
+}
+
+.bio-text mark.orange {
+    background: rgba(255, 128, 0, 0.3);
+    color: var(--orange);
+    padding: 0 3px;
+    border-radius: 3px;
+}
+
+.bio-stats {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    width: 100%;
+    max-width: 600px;
+}
+
+.bio-stats .stat {
+    background: linear-gradient(135deg, var(--mercedes-teal), #006d62);
+    padding: 1rem 1.5rem;
+    border-radius: 12px;
+    text-align: center;
+    min-width: 120px;
+}
+
+.bio-stats .stat.orange {
+    background: linear-gradient(135deg, var(--orange), var(--redbull-red));
+}
+
+.bio-stats .stat-num {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 2.5rem;
+    font-weight: 900;
+    color: var(--white);
+}
+
+.bio-stats .stat-label {
+    display: block;
+    font-size: 0.9rem;
+    color: rgba(255,255,255,0.8);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
 /* ===== MULTIPLE CHOICE QUESTIONS ===== */
 .mc-questions {
     display: flex;
