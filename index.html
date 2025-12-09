@@ -73,6 +73,8 @@
         <button class="indicator" data-slide="10"></button>
         <button class="indicator" data-slide="11"></button>
         <button class="indicator" data-slide="12"></button>
+        <button class="indicator" data-slide="13"></button>
+        <button class="indicator" data-slide="14"></button>
     </div>
 
     <!-- Slides -->
@@ -241,11 +243,15 @@
                             <span>LISTENING TRANSCRIPT</span>
                         </div>
                         <div class="transcript-body">
-                            <p>"The <mark>2021 season</mark> was crazy. <mark>Lewis Hamilton</mark> wanted to win his <mark>8th title</mark>. But <mark>Max Verstappen</mark> wanted to win his <mark>first title</mark>.</p>
-                            <p>They raced in many countries. Sometimes Lewis won, sometimes Max won. They even <mark>crashed</mark> into each other! It was dangerous.</p>
-                            <p>They arrived at the final race in <mark>Abu Dhabi</mark> with <mark>equal points</mark>. It was the last chance.</p>
-                            <p>Lewis was very fast in the race. He was <mark>leading</mark>. Max was behind him. Everyone thought Lewis was the winner.</p>
-                            <p>But then, a <mark>safety car</mark> came out, and everything changed..."</p>
+                            <p>"The <mark>2021 season</mark> was one of the most exciting in Formula 1 history. <mark>Lewis Hamilton</mark> wanted to win his <mark>8th World Championship</mark>. He already had <mark>7 titles</mark>, and one more would make him the greatest driver ever. But there was a problem: a young Dutch driver named <mark>Max Verstappen</mark> wanted to win his <mark>first title</mark>.</p>
+
+                            <p>Max drove for the <mark>Red Bull Racing</mark> team. He was only <mark>24 years old</mark>, but he was very fast and very brave. Lewis drove for <mark>Mercedes</mark>. He had more experience, but Max had more energy. The two drivers <mark>fought</mark> in every race.</p>
+
+                            <p>They raced in <mark>22 countries</mark> that year. Sometimes Lewis won, sometimes Max won. They even <mark>crashed</mark> into each other at <mark>Silverstone</mark> and <mark>Monza</mark>! It was dangerous, but the fans loved it. Everyone watched their battle on TV.</p>
+
+                            <p>Finally, they arrived at the last race in <mark>Abu Dhabi</mark> with <mark>equal points</mark>. 369.5 points each! It was incredible. The winner of this race would become the <mark>World Champion</mark>. Lewis was very fast. He <mark>led</mark> the race from the start. Max tried to catch him, but Lewis was too quick.</p>
+
+                            <p>With only <mark>5 laps</mark> to go, everyone thought Lewis was the winner. But then, another car <mark>crashed</mark> and a <mark>safety car</mark> came out. All the cars <mark>slowed down</mark>. Max <mark>changed</mark> his tyres, but Lewis <mark>stayed</mark> on old tyres. When the race <mark>restarted</mark> on the final lap, Max had fresh tyres and Lewis didn't. Max <mark>overtook</mark> Lewis and <mark>won</mark> the championship. It was the most dramatic finish ever!"</p>
                         </div>
                     </div>
                 </div>
@@ -278,7 +284,47 @@
 
                         <div class="tf-item">
                             <span class="tf-num">2</span>
-                            <p class="tf-statement">Max and Lewis crashed into each other.</p>
+                            <p class="tf-statement">Max Verstappen drove for the Mercedes team.</p>
+                            <div class="tf-buttons">
+                                <button onclick="checkTF(this, false)">TRUE</button>
+                                <button onclick="checkTF(this, true)" class="correct">FALSE</button>
+                            </div>
+                            <span class="tf-feedback hidden">(Red Bull Racing)</span>
+                        </div>
+
+                        <div class="tf-item">
+                            <span class="tf-num">3</span>
+                            <p class="tf-statement">Max and Lewis crashed into each other during the season.</p>
+                            <div class="tf-buttons">
+                                <button onclick="checkTF(this, true)" class="correct">TRUE</button>
+                                <button onclick="checkTF(this, false)">FALSE</button>
+                            </div>
+                            <span class="tf-feedback hidden">(at Silverstone and Monza)</span>
+                        </div>
+
+                        <div class="tf-item">
+                            <span class="tf-num">4</span>
+                            <p class="tf-statement">They raced in 15 countries that year.</p>
+                            <div class="tf-buttons">
+                                <button onclick="checkTF(this, false)">TRUE</button>
+                                <button onclick="checkTF(this, true)" class="correct">FALSE</button>
+                            </div>
+                            <span class="tf-feedback hidden">(22 countries)</span>
+                        </div>
+
+                        <div class="tf-item">
+                            <span class="tf-num">5</span>
+                            <p class="tf-statement">Lewis and Max arrived at Abu Dhabi with equal points.</p>
+                            <div class="tf-buttons">
+                                <button onclick="checkTF(this, true)" class="correct">TRUE</button>
+                                <button onclick="checkTF(this, false)">FALSE</button>
+                            </div>
+                            <span class="tf-feedback hidden">(369.5 points each)</span>
+                        </div>
+
+                        <div class="tf-item">
+                            <span class="tf-num">6</span>
+                            <p class="tf-statement">Lewis led the race from the start in Abu Dhabi.</p>
                             <div class="tf-buttons">
                                 <button onclick="checkTF(this, true)" class="correct">TRUE</button>
                                 <button onclick="checkTF(this, false)">FALSE</button>
@@ -287,19 +333,29 @@
                         </div>
 
                         <div class="tf-item">
-                            <span class="tf-num">3</span>
-                            <p class="tf-statement">Lewis was behind Max for the whole race.</p>
+                            <span class="tf-num">7</span>
+                            <p class="tf-statement">Max changed his tyres during the safety car.</p>
+                            <div class="tf-buttons">
+                                <button onclick="checkTF(this, true)" class="correct">TRUE</button>
+                                <button onclick="checkTF(this, false)">FALSE</button>
+                            </div>
+                            <span class="tf-feedback hidden"></span>
+                        </div>
+
+                        <div class="tf-item">
+                            <span class="tf-num">8</span>
+                            <p class="tf-statement">Lewis won the 2021 championship.</p>
                             <div class="tf-buttons">
                                 <button onclick="checkTF(this, false)">TRUE</button>
                                 <button onclick="checkTF(this, true)" class="correct">FALSE</button>
                             </div>
-                            <span class="tf-feedback hidden">(Lewis was leading)</span>
+                            <span class="tf-feedback hidden">(Max won)</span>
                         </div>
                     </div>
 
                     <div class="answer-key-box hidden" id="answerKey1">
                         <h4>Answer Key:</h4>
-                        <p>1. <strong>False</strong> (his 8th) | 2. <strong>True</strong> | 3. <strong>False</strong> (Lewis was leading)</p>
+                        <p>1. F (8th) | 2. F (Red Bull) | 3. T | 4. F (22) | 5. T | 6. T | 7. T | 8. F (Max won)</p>
                     </div>
                     <button class="btn-show-answers" onclick="showAnswerKey('answerKey1')">Show Answer Key</button>
                 </div>
@@ -441,20 +497,20 @@
                             <span class="mag-name">F1 WEEKLY</span>
                             <span class="mag-date">2025</span>
                         </div>
-                        <h3 class="article-title">THE 2025 SHOCK</h3>
+                        <h3 class="article-title">THE 2025 SHOCK: A NEW CHAMPION</h3>
                         <div class="article-body">
-                            <p>Four years later, in <mark class="blue">2025</mark>, the story was different. <mark class="orange">Max Verstappen</mark> was the champion, but he had a new <mark class="green">rival</mark>: <mark class="purple">Lando Norris</mark>.</p>
+                            <p>Four years later, in <mark class="blue">2025</mark>, the story was very different. <mark class="orange">Max Verstappen</mark> was the <mark class="green">champion</mark> for four years in a row. He <mark class="green">won</mark> in <mark class="blue">2021</mark>, <mark class="blue">2022</mark>, <mark class="blue">2023</mark>, and <mark class="blue">2024</mark>. Everyone thought he was impossible to <mark class="green">beat</mark>. But he had a new <mark class="green">rival</mark>: a British driver named <mark class="purple">Lando Norris</mark>.</p>
 
-                            <p><mark class="purple">Lando</mark> drove for the <mark class="blue">McLaren</mark> team. He was <mark class="green">brilliant</mark> all year. <mark class="orange">Max</mark> tried to <mark class="green">beat</mark> him, but the McLaren car was very fast.</p>
+                            <p><mark class="purple">Lando</mark> was born in <mark class="blue">Bristol, England</mark> in <mark class="blue">1999</mark>. He <mark class="green">started</mark> racing when he was only <mark class="red">7 years old</mark>. He <mark class="green">joined</mark> Formula 1 in <mark class="blue">2019</mark> and <mark class="green">drove</mark> for the <mark class="blue">McLaren</mark> team. For many years, his car was not fast enough to win. But in <mark class="blue">2025</mark>, McLaren <mark class="green">built</mark> an amazing car.</p>
 
-                            <p>The <mark class="green">season</mark> finished with a very close score. <mark class="orange">Max</mark> drove perfectly, but he did not have enough points.</p>
+                            <p>The <mark class="green">season</mark> was incredible. <mark class="purple">Lando</mark> <mark class="green">won</mark> <mark class="red">8 races</mark>. <mark class="orange">Max</mark> <mark class="green">won</mark> <mark class="red">6 races</mark>. They <mark class="green">fought</mark> on every track. Sometimes they <mark class="green">touched</mark> wheels! The fans <mark class="green">loved</mark> watching them race. It was like <mark class="orange">Max</mark> versus Lewis again, but with a new <mark class="green">rival</mark>.</p>
 
-                            <p>In the end, <mark class="purple">Lando Norris</mark> <mark class="green">beat</mark> <mark class="orange">Max Verstappen</mark>.</p>
+                            <p><mark class="orange">Max</mark> <mark class="green">drove</mark> perfectly all year. He never <mark class="green">made</mark> a mistake. But the McLaren car was simply faster. <mark class="purple">Lando</mark> was <mark class="green">brilliant</mark> under pressure. He <mark class="green">stayed</mark> calm and <mark class="green">focused</mark>. In the last race in <mark class="blue">Abu Dhabi</mark>, <mark class="purple">Lando</mark> only <mark class="green">needed</mark> to finish in the top 5 to become champion.</p>
 
-                            <p>It was a heartbreak for <mark class="orange">Max</mark>. He lost the World <mark class="green">Title</mark> by just <mark class="red">2 points</mark>. <mark class="purple">Lando</mark> cried <strong>because</strong> he was so happy.</p>
+                            <p><mark class="purple">Lando</mark> <mark class="green">finished</mark> second in Abu Dhabi. He <mark class="green">beat</mark> <mark class="orange">Max Verstappen</mark> by just <mark class="red">2 points</mark>! When he <mark class="green">crossed</mark> the finish line, <mark class="purple">Lando</mark> <mark class="green">cried</mark> on the radio <strong>because</strong> he was so happy. It was his first World <mark class="green">Title</mark>. For <mark class="orange">Max</mark>, it was heartbreak. He <mark class="green">lost</mark> after four years of winning. But he <mark class="green">said</mark>, "Lando deserved it. He was the best this year."</p>
                         </div>
                         <div class="color-legend">
-                            <span><mark class="blue">Dates/Teams</mark></span>
+                            <span><mark class="blue">Dates/Places</mark></span>
                             <span><mark class="orange">Max</mark></span>
                             <span><mark class="purple">Lando</mark></span>
                             <span><mark class="green">Vocabulary</mark></span>
@@ -482,57 +538,91 @@
                         <p>📝 <strong>Instructions:</strong> Read the text quickly. Find the answers to these questions.</p>
                     </div>
 
-                    <div class="scanning-questions">
-                        <div class="scan-q">
+                    <div class="mc-questions">
+                        <div class="mc-q">
                             <span class="q-num">1</span>
-                            <p class="q-text">Who was Max's rival in 2025?</p>
-                            <div class="answer-row">
-                                <span>Answer:</span>
-                                <input type="text" id="scan1" class="answer-input" placeholder="Write your answer..." data-answer="lando norris">
-                                <button onclick="checkScan('scan1')" class="check-btn">✓</button>
+                            <p class="q-text">Who was Max's new rival in 2025?</p>
+                            <div class="mc-options">
+                                <button onclick="checkMC(this, false)" class="mc-btn">A) Lewis Hamilton</button>
+                                <button onclick="checkMC(this, true)" class="mc-btn correct">B) Lando Norris</button>
+                                <button onclick="checkMC(this, false)" class="mc-btn">C) Charles Leclerc</button>
                             </div>
                         </div>
 
-                        <div class="scan-q">
+                        <div class="mc-q">
                             <span class="q-num">2</span>
                             <p class="q-text">Which team did Lando drive for?</p>
-                            <div class="answer-row">
-                                <span>Answer:</span>
-                                <input type="text" id="scan2" class="answer-input" placeholder="Write your answer..." data-answer="mclaren">
-                                <button onclick="checkScan('scan2')" class="check-btn">✓</button>
+                            <div class="mc-options">
+                                <button onclick="checkMC(this, false)" class="mc-btn">A) Red Bull</button>
+                                <button onclick="checkMC(this, false)" class="mc-btn">B) Mercedes</button>
+                                <button onclick="checkMC(this, true)" class="mc-btn correct">C) McLaren</button>
                             </div>
                         </div>
 
-                        <div class="scan-q">
+                        <div class="mc-q">
                             <span class="q-num">3</span>
-                            <p class="q-text">Why did Lando cry?</p>
-                            <div class="answer-row">
-                                <span>Answer:</span>
-                                <input type="text" id="scan3" class="answer-input wide" placeholder="Write your answer..." data-answer="because he was happy">
-                                <button onclick="checkScan('scan3')" class="check-btn">✓</button>
+                            <p class="q-text">Where was Lando born?</p>
+                            <div class="mc-options">
+                                <button onclick="checkMC(this, true)" class="mc-btn correct">A) Bristol, England</button>
+                                <button onclick="checkMC(this, false)" class="mc-btn">B) London, England</button>
+                                <button onclick="checkMC(this, false)" class="mc-btn">C) Amsterdam, Netherlands</button>
                             </div>
-                            <p class="grammar-note">💡 Use "<strong>because</strong>" in your answer!</p>
                         </div>
 
-                        <div class="scan-q">
+                        <div class="mc-q">
                             <span class="q-num">4</span>
-                            <p class="q-text">How many points did Max lose by?</p>
-                            <div class="answer-row">
-                                <span>Answer:</span>
-                                <input type="text" id="scan4" class="answer-input" placeholder="Write your answer..." data-answer="2">
-                                <button onclick="checkScan('scan4')" class="check-btn">✓</button>
+                            <p class="q-text">How old was Lando when he started racing?</p>
+                            <div class="mc-options">
+                                <button onclick="checkMC(this, true)" class="mc-btn correct">A) 7 years old</button>
+                                <button onclick="checkMC(this, false)" class="mc-btn">B) 10 years old</button>
+                                <button onclick="checkMC(this, false)" class="mc-btn">C) 15 years old</button>
+                            </div>
+                        </div>
+
+                        <div class="mc-q">
+                            <span class="q-num">5</span>
+                            <p class="q-text">How many races did Lando win in 2025?</p>
+                            <div class="mc-options">
+                                <button onclick="checkMC(this, false)" class="mc-btn">A) 6 races</button>
+                                <button onclick="checkMC(this, true)" class="mc-btn correct">B) 8 races</button>
+                                <button onclick="checkMC(this, false)" class="mc-btn">C) 10 races</button>
+                            </div>
+                        </div>
+
+                        <div class="mc-q">
+                            <span class="q-num">6</span>
+                            <p class="q-text">Why did Lando cry at the end?</p>
+                            <div class="mc-options">
+                                <button onclick="checkMC(this, false)" class="mc-btn">A) Because he crashed</button>
+                                <button onclick="checkMC(this, false)" class="mc-btn">B) Because he lost</button>
+                                <button onclick="checkMC(this, true)" class="mc-btn correct">C) Because he was happy</button>
+                            </div>
+                        </div>
+
+                        <div class="mc-q">
+                            <span class="q-num">7</span>
+                            <p class="q-text">How many points did Lando beat Max by?</p>
+                            <div class="mc-options">
+                                <button onclick="checkMC(this, true)" class="mc-btn correct">A) 2 points</button>
+                                <button onclick="checkMC(this, false)" class="mc-btn">B) 10 points</button>
+                                <button onclick="checkMC(this, false)" class="mc-btn">C) 50 points</button>
+                            </div>
+                        </div>
+
+                        <div class="mc-q">
+                            <span class="q-num">8</span>
+                            <p class="q-text">What did Max say about Lando?</p>
+                            <div class="mc-options">
+                                <button onclick="checkMC(this, false)" class="mc-btn">A) "He was lucky."</button>
+                                <button onclick="checkMC(this, true)" class="mc-btn correct">B) "He deserved it."</button>
+                                <button onclick="checkMC(this, false)" class="mc-btn">C) "I will beat him next year."</button>
                             </div>
                         </div>
                     </div>
 
                     <div class="answer-key-box hidden" id="answerKey2">
                         <h4>Answer Key:</h4>
-                        <ol>
-                            <li><strong>Lando Norris</strong></li>
-                            <li><strong>McLaren</strong></li>
-                            <li><strong>Because he was happy</strong></li>
-                            <li><strong>2 points</strong></li>
-                        </ol>
+                        <p>1. B | 2. C | 3. A | 4. A | 5. B | 6. C | 7. A | 8. B</p>
                     </div>
                     <button class="btn-show-answers" onclick="showAnswerKey('answerKey2')">Show Answer Key</button>
                 </div>
@@ -707,8 +797,113 @@
             </div>
         </section>
 
-        <!-- ==================== SLIDE 12: END ==================== -->
+        <!-- ==================== SLIDE 12: BACKUP GAME 3 - VERB MATCH ==================== -->
         <section class="slide" data-slide="12">
+            <div class="slide-header">
+                <div class="phase-tag phase-game">BACKUP GAME 3</div>
+                <h2>Verb Match Challenge</h2>
+                <span class="time-tag">5-7 MIN</span>
+            </div>
+            <div class="slide-content game-slide scrollable">
+                <div class="scroll-content">
+                    <div class="game-type">🔗 Memory & Matching</div>
+                    <div class="game-purpose">Match base verbs with their past tense forms</div>
+
+                    <div class="match-game-container">
+                        <div class="match-score">
+                            <span>Matches: </span>
+                            <span id="matchScore">0</span>
+                            <span> / 6</span>
+                        </div>
+
+                        <div class="match-columns">
+                            <div class="match-column base-verbs" id="baseVerbsColumn">
+                                <!-- Generated by JavaScript -->
+                            </div>
+                            <div class="match-column past-verbs" id="pastVerbsColumn">
+                                <!-- Generated by JavaScript -->
+                            </div>
+                        </div>
+
+                        <div class="match-result hidden" id="matchResult">
+                            <span class="result-icon">🎉</span>
+                            <span class="result-text">All Matched!</span>
+                        </div>
+                    </div>
+
+                    <div class="game-instructions">
+                        <h4>How to Play:</h4>
+                        <ol>
+                            <li>Click a verb on the LEFT (base form)</li>
+                            <li>Click the matching past form on the RIGHT</li>
+                            <li>Correct matches turn green!</li>
+                            <li>Match all 6 pairs to win</li>
+                        </ol>
+                    </div>
+
+                    <button class="btn-reset-game" onclick="resetMatchGame()">🔄 New Verbs</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== SLIDE 13: BACKUP GAME 4 - FILL IN THE BLANK ==================== -->
+        <section class="slide" data-slide="13">
+            <div class="slide-header">
+                <div class="phase-tag phase-game">BACKUP GAME 4</div>
+                <h2>Fill in the Blank Race</h2>
+                <span class="time-tag">5-7 MIN</span>
+            </div>
+            <div class="slide-content game-slide scrollable">
+                <div class="scroll-content">
+                    <div class="game-type">📝 Quick Thinking</div>
+                    <div class="game-purpose">Choose the correct past tense to complete sentences</div>
+
+                    <div class="fill-blank-game">
+                        <div class="fib-score-bar">
+                            <div class="fib-score correct-score">
+                                <span class="score-label">Correct:</span>
+                                <span id="fibCorrect">0</span>
+                            </div>
+                            <div class="fib-score wrong-score">
+                                <span class="score-label">Wrong:</span>
+                                <span id="fibWrong">0</span>
+                            </div>
+                        </div>
+
+                        <div class="fib-sentence" id="fibSentence">
+                            Yesterday, Max _______ the race.
+                        </div>
+
+                        <div class="fib-options" id="fibOptions">
+                            <button onclick="checkFIB(this, true)" class="fib-btn correct">won</button>
+                            <button onclick="checkFIB(this, false)" class="fib-btn">winned</button>
+                            <button onclick="checkFIB(this, false)" class="fib-btn">win</button>
+                        </div>
+
+                        <div class="fib-feedback hidden" id="fibFeedback">
+                            <span class="feedback-text"></span>
+                        </div>
+
+                        <button class="game-btn next-sentence" onclick="nextFIBSentence()">➡️ NEXT SENTENCE</button>
+                    </div>
+
+                    <div class="game-instructions">
+                        <h4>How to Play:</h4>
+                        <ol>
+                            <li>Read the sentence with the blank</li>
+                            <li>Click the CORRECT past tense form</li>
+                            <li>Green = Correct! Red = Try the next one!</li>
+                            <li>See how many you can get right!</li>
+                        </ol>
+                    </div>
+
+                    <button class="btn-reset-game" onclick="resetFIBGame()">🔄 Start Over</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== SLIDE 14: END ==================== -->
+        <section class="slide" data-slide="14">
             <div class="slide-content finish-slide">
                 <div class="checkered-flag">
                     <span>🏁</span>

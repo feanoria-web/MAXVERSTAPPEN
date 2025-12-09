@@ -5,7 +5,7 @@
 
 // ===== SLIDE NAVIGATION =====
 let currentSlide = 0;
-const totalSlides = 13;
+const totalSlides = 15;
 
 function goToSlide(index) {
     if (index < 0 || index >= totalSlides) return;
@@ -164,6 +164,21 @@ function showAnswerKey(id) {
     if (answerBox) {
         answerBox.classList.toggle('hidden');
         playSound('reveal');
+    }
+}
+
+// ===== MULTIPLE CHOICE QUESTIONS =====
+function checkMC(btn, isCorrect) {
+    const parent = btn.closest('.mc-options');
+    parent.querySelectorAll('.mc-btn').forEach(b => b.classList.remove('selected-correct', 'selected-wrong', 'show-correct'));
+
+    if (isCorrect) {
+        btn.classList.add('selected-correct');
+        playSound('correct');
+    } else {
+        btn.classList.add('selected-wrong');
+        playSound('wrong');
+        setTimeout(() => parent.querySelector('.correct')?.classList.add('show-correct'), 500);
     }
 }
 
@@ -403,6 +418,200 @@ function resetTTT() {
     playSound('slide');
 }
 
+// ===== GAME 3: VERB MATCH =====
+let selectedBaseVerb = null;
+let matchScore = 0;
+let matchVerbs = [];
+
+function initMatchGame() {
+    matchVerbs = getRandomVerbs(6);
+    matchScore = 0;
+    selectedBaseVerb = null;
+    document.getElementById('matchScore').textContent = '0';
+    document.getElementById('matchResult').classList.add('hidden');
+
+    const baseColumn = document.getElementById('baseVerbsColumn');
+    const pastColumn = document.getElementById('pastVerbsColumn');
+
+    if (!baseColumn || !pastColumn) return;
+
+    baseColumn.innerHTML = '';
+    pastColumn.innerHTML = '';
+
+    // Shuffle past verbs separately
+    const shuffledPast = [...matchVerbs].sort(() => Math.random() - 0.5);
+
+    matchVerbs.forEach((verb, i) => {
+        const baseItem = document.createElement('div');
+        baseItem.className = 'match-item';
+        baseItem.textContent = verb.base;
+        baseItem.dataset.base = verb.base;
+        baseItem.dataset.past = verb.past;
+        baseItem.onclick = () => selectBaseVerb(baseItem);
+        baseColumn.appendChild(baseItem);
+    });
+
+    shuffledPast.forEach((verb, i) => {
+        const pastItem = document.createElement('div');
+        pastItem.className = 'match-item';
+        pastItem.textContent = verb.past;
+        pastItem.dataset.past = verb.past;
+        pastItem.dataset.base = verb.base;
+        pastItem.onclick = () => selectPastVerb(pastItem);
+        pastColumn.appendChild(pastItem);
+    });
+}
+
+function selectBaseVerb(item) {
+    if (item.classList.contains('matched')) return;
+
+    document.querySelectorAll('#baseVerbsColumn .match-item').forEach(i => i.classList.remove('selected'));
+    item.classList.add('selected');
+    selectedBaseVerb = item;
+    playSound('click');
+}
+
+function selectPastVerb(item) {
+    if (!selectedBaseVerb || item.classList.contains('matched')) return;
+
+    if (selectedBaseVerb.dataset.past === item.dataset.past) {
+        // Correct match!
+        selectedBaseVerb.classList.remove('selected');
+        selectedBaseVerb.classList.add('matched');
+        item.classList.add('matched');
+        matchScore++;
+        document.getElementById('matchScore').textContent = matchScore;
+        playSound('correct');
+
+        if (matchScore === 6) {
+            document.getElementById('matchResult').classList.remove('hidden');
+            playSound('victory');
+        }
+    } else {
+        // Wrong match
+        item.classList.add('wrong');
+        playSound('wrong');
+        setTimeout(() => item.classList.remove('wrong'), 500);
+    }
+
+    selectedBaseVerb = null;
+    document.querySelectorAll('#baseVerbsColumn .match-item').forEach(i => i.classList.remove('selected'));
+}
+
+function resetMatchGame() {
+    initMatchGame();
+    playSound('slide');
+}
+
+// ===== GAME 4: FILL IN THE BLANK =====
+let fibCorrect = 0;
+let fibWrong = 0;
+let fibSentenceIndex = 0;
+
+const fibSentences = [
+    { sentence: "Yesterday, Max _______ the race.", correct: "won", wrong: ["winned", "win"] },
+    { sentence: "Lewis _______ very fast in the last lap.", correct: "drove", wrong: ["drived", "drive"] },
+    { sentence: "The fans _______ when Max crossed the line.", correct: "cheered", wrong: ["cheered", "cheer"] },
+    { sentence: "I _______ the race on TV last night.", correct: "watched", wrong: ["watch", "watchd"] },
+    { sentence: "Max _______ his first championship in 2021.", correct: "won", wrong: ["winned", "win"] },
+    { sentence: "Lando _______ to the podium after winning.", correct: "went", wrong: ["goed", "go"] },
+    { sentence: "The team _______ very hard all season.", correct: "worked", wrong: ["work", "workt"] },
+    { sentence: "Lewis _______ sad after losing the race.", correct: "felt", wrong: ["feeled", "feel"] },
+    { sentence: "The mechanics _______ the car in 2 seconds.", correct: "fixed", wrong: ["fix", "fixd"] },
+    { sentence: "Max _______ Lewis on the final lap.", correct: "passed", wrong: ["pass", "passt"] },
+    { sentence: "I _______ a lot about F1 last year.", correct: "learned", wrong: ["learn", "learnd"] },
+    { sentence: "She _______ to her friend about the race.", correct: "talked", wrong: ["talk", "talkt"] },
+    { sentence: "The driver _______ a new record yesterday.", correct: "broke", wrong: ["breaked", "break"] },
+    { sentence: "They _______ the trophy to Max.", correct: "gave", wrong: ["gived", "give"] },
+    { sentence: "The rain _______ during the race.", correct: "started", wrong: ["start", "startd"] },
+    { sentence: "Max _______ to Red Bull in 2016.", correct: "came", wrong: ["comed", "come"] },
+    { sentence: "Lewis _______ 7 championships before 2021.", correct: "had", wrong: ["haved", "have"] },
+    { sentence: "The crash _______ on lap 15.", correct: "happened", wrong: ["happen", "happend"] },
+    { sentence: "I _______ some water after the race.", correct: "drank", wrong: ["drinked", "drink"] },
+    { sentence: "The fans _______ very loudly.", correct: "shouted", wrong: ["shout", "shoutd"] }
+];
+
+function shuffleArray(array) {
+    const newArr = [...array];
+    for (let i = newArr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [newArr[i], newArr[j]] = [newArr[j], newArr[i]];
+    }
+    return newArr;
+}
+
+function loadFIBSentence() {
+    const data = fibSentences[fibSentenceIndex];
+    document.getElementById('fibSentence').textContent = data.sentence;
+
+    const optionsDiv = document.getElementById('fibOptions');
+    optionsDiv.innerHTML = '';
+
+    // Create options: 1 correct + 2 wrong, shuffled
+    const options = [
+        { text: data.correct, isCorrect: true },
+        { text: data.wrong[0], isCorrect: false },
+        { text: data.wrong[1], isCorrect: false }
+    ];
+
+    shuffleArray(options).forEach(opt => {
+        const btn = document.createElement('button');
+        btn.className = 'fib-btn';
+        if (opt.isCorrect) btn.classList.add('correct');
+        btn.textContent = opt.text;
+        btn.onclick = () => checkFIB(btn, opt.isCorrect);
+        optionsDiv.appendChild(btn);
+    });
+
+    document.getElementById('fibFeedback').classList.add('hidden');
+}
+
+function checkFIB(btn, isCorrect) {
+    const optionsDiv = document.getElementById('fibOptions');
+    optionsDiv.querySelectorAll('.fib-btn').forEach(b => {
+        b.classList.remove('selected-correct', 'selected-wrong');
+        b.onclick = null; // Disable further clicks
+    });
+
+    const feedback = document.getElementById('fibFeedback');
+
+    if (isCorrect) {
+        btn.classList.add('selected-correct');
+        fibCorrect++;
+        document.getElementById('fibCorrect').textContent = fibCorrect;
+        feedback.textContent = '✓ Correct!';
+        feedback.className = 'fib-feedback correct';
+        playSound('correct');
+    } else {
+        btn.classList.add('selected-wrong');
+        fibWrong++;
+        document.getElementById('fibWrong').textContent = fibWrong;
+        // Show correct answer
+        optionsDiv.querySelector('.correct')?.classList.add('selected-correct');
+        feedback.textContent = '✗ Try next one!';
+        feedback.className = 'fib-feedback wrong';
+        playSound('wrong');
+    }
+
+    feedback.classList.remove('hidden');
+}
+
+function nextFIBSentence() {
+    fibSentenceIndex = (fibSentenceIndex + 1) % fibSentences.length;
+    loadFIBSentence();
+    playSound('slide');
+}
+
+function resetFIBGame() {
+    fibCorrect = 0;
+    fibWrong = 0;
+    fibSentenceIndex = 0;
+    document.getElementById('fibCorrect').textContent = '0';
+    document.getElementById('fibWrong').textContent = '0';
+    loadFIBSentence();
+    playSound('slide');
+}
+
 // ===== SOUNDS =====
 function playSound(type) {
     try {
@@ -443,8 +652,10 @@ document.addEventListener('DOMContentLoaded', () => {
         firstSlide.classList.add('active');
     }
 
-    // Initialize Tic-Tac-Toe with random verbs
+    // Initialize all games with random verbs
     initTTT();
+    initMatchGame();
+    loadFIBSentence();
 
     console.log('🏎️ Hamilton vs Verstappen Lesson Ready!');
 });

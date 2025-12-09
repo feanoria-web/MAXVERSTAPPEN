@@ -1068,6 +1068,281 @@ mark.red { background: #dc2626; color: white; padding: 0.1rem 0.35rem; border-ra
 .progress-bar { position: fixed; bottom: 0; left: 0; width: 100%; height: 6px; background: rgba(0,0,0,0.5); z-index: 1000; }
 .progress-fill { height: 100%; background: linear-gradient(90deg, var(--orange), var(--redbull-red)); width: 0%; transition: width 0.5s ease; }
 
+/* ===== MULTIPLE CHOICE QUESTIONS ===== */
+.mc-questions {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    width: 100%;
+    max-width: 800px;
+}
+
+.mc-q {
+    background: rgba(255,255,255,0.05);
+    border-radius: 12px;
+    padding: 1rem 1.25rem;
+    border-left: 4px solid var(--orange);
+}
+
+.mc-q .q-num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    background: var(--orange);
+    color: var(--redbull-dark);
+    font-family: var(--font-display);
+    font-weight: 700;
+    border-radius: 50%;
+    margin-right: 0.75rem;
+}
+
+.mc-q .q-text {
+    display: inline;
+    font-size: 1.1rem;
+    font-weight: 500;
+}
+
+.mc-options {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-top: 0.75rem;
+    margin-left: 2.5rem;
+}
+
+.mc-btn {
+    background: rgba(255,255,255,0.08);
+    border: 2px solid rgba(255,255,255,0.2);
+    color: var(--white);
+    padding: 0.6rem 1rem;
+    border-radius: 8px;
+    font-family: var(--font-body);
+    font-size: 1rem;
+    cursor: pointer;
+    text-align: left;
+    transition: all 0.2s ease;
+}
+
+.mc-btn:hover {
+    background: rgba(255,255,255,0.15);
+    border-color: var(--orange);
+}
+
+.mc-btn.selected-correct {
+    background: rgba(34, 197, 94, 0.3);
+    border-color: var(--success);
+    color: var(--success);
+}
+
+.mc-btn.selected-wrong {
+    background: rgba(239, 68, 68, 0.3);
+    border-color: var(--error);
+    color: var(--error);
+}
+
+.mc-btn.show-correct {
+    background: rgba(34, 197, 94, 0.2);
+    border-color: var(--success);
+}
+
+/* ===== GAME 3: VERB MATCH ===== */
+.match-game-container {
+    width: 100%;
+    max-width: 700px;
+}
+
+.match-score {
+    text-align: center;
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+    color: var(--gold);
+}
+
+.match-columns {
+    display: flex;
+    justify-content: center;
+    gap: 3rem;
+}
+
+.match-column {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.match-column.base-verbs .match-item {
+    background: var(--redbull-blue);
+    border-color: var(--mercedes-teal);
+}
+
+.match-column.past-verbs .match-item {
+    background: var(--redbull-dark);
+    border-color: var(--orange);
+}
+
+.match-item {
+    padding: 0.75rem 2rem;
+    border: 3px solid;
+    border-radius: 10px;
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    min-width: 140px;
+    text-align: center;
+}
+
+.match-item:hover:not(.matched):not(.selected) {
+    transform: scale(1.05);
+    box-shadow: 0 0 15px rgba(255,128,0,0.5);
+}
+
+.match-item.selected {
+    transform: scale(1.1);
+    box-shadow: 0 0 20px var(--gold);
+    border-color: var(--gold);
+}
+
+.match-item.matched {
+    background: rgba(34, 197, 94, 0.3);
+    border-color: var(--success);
+    color: var(--success);
+    cursor: default;
+    opacity: 0.7;
+}
+
+.match-item.wrong {
+    animation: wrongShake 0.5s ease;
+    border-color: var(--error);
+}
+
+@keyframes wrongShake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-10px); }
+    75% { transform: translateX(10px); }
+}
+
+.match-result {
+    text-align: center;
+    margin-top: 1.5rem;
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    color: var(--success);
+}
+
+.match-result .result-icon {
+    font-size: 2.5rem;
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+/* ===== GAME 4: FILL IN THE BLANK ===== */
+.fill-blank-game {
+    width: 100%;
+    max-width: 700px;
+    text-align: center;
+}
+
+.fib-score-bar {
+    display: flex;
+    justify-content: center;
+    gap: 3rem;
+    margin-bottom: 2rem;
+}
+
+.fib-score {
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    padding: 0.5rem 1.5rem;
+    border-radius: 8px;
+}
+
+.fib-score.correct-score {
+    background: rgba(34, 197, 94, 0.2);
+    color: var(--success);
+}
+
+.fib-score.wrong-score {
+    background: rgba(239, 68, 68, 0.2);
+    color: var(--error);
+}
+
+.fib-sentence {
+    background: rgba(255,255,255,0.1);
+    padding: 1.5rem 2rem;
+    border-radius: 15px;
+    font-size: 1.5rem;
+    font-weight: 500;
+    margin-bottom: 1.5rem;
+    border: 2px solid var(--orange);
+}
+
+.fib-options {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-bottom: 1.5rem;
+}
+
+.fib-btn {
+    background: rgba(255,255,255,0.1);
+    border: 3px solid rgba(255,255,255,0.3);
+    color: var(--white);
+    padding: 1rem 2rem;
+    border-radius: 12px;
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    min-width: 120px;
+}
+
+.fib-btn:hover:not(.selected-correct):not(.selected-wrong) {
+    background: rgba(255,128,0,0.2);
+    border-color: var(--orange);
+    transform: scale(1.05);
+}
+
+.fib-btn.selected-correct {
+    background: rgba(34, 197, 94, 0.4);
+    border-color: var(--success);
+    color: var(--success);
+    transform: scale(1.1);
+}
+
+.fib-btn.selected-wrong {
+    background: rgba(239, 68, 68, 0.4);
+    border-color: var(--error);
+    color: var(--error);
+}
+
+.fib-feedback {
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    padding: 0.75rem;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+}
+
+.fib-feedback.correct {
+    background: rgba(34, 197, 94, 0.2);
+    color: var(--success);
+}
+
+.fib-feedback.wrong {
+    background: rgba(239, 68, 68, 0.2);
+    color: var(--error);
+}
+
+.next-sentence {
+    margin-top: 1rem;
+}
+
 /* Utilities */
 .hidden { display: none !important; }
 
