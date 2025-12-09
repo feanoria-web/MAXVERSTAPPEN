@@ -1,6 +1,6 @@
 /* ========================================
-   F1 RACING - VERSTAPPEN LESSON
-   Complete JavaScript
+   F1 RACING - HAMILTON VS VERSTAPPEN LESSON
+   Complete JavaScript - Rivalry Edition
    ======================================== */
 
 // ===== SLIDE NAVIGATION =====
@@ -45,7 +45,7 @@ document.addEventListener('touchend', e => {
 
 // Click navigation
 document.querySelector('.slides-container')?.addEventListener('click', e => {
-    if (e.target.closest('button, input, video, audio')) return;
+    if (e.target.closest('button, input, video, audio, .sentence-card, .student-response, .ttt-cell, .hidden-answer')) return;
     const x = e.clientX / window.innerWidth;
     if (x > 0.7) nextSlide();
     else if (x < 0.3) prevSlide();
@@ -67,20 +67,6 @@ function updateTimer(id, sec) {
     document.getElementById(id).textContent = String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
 }
 
-// ===== MYSTERY GAME =====
-function showClue(n) {
-    const clue = document.querySelector(`[data-clue="${n}"]`);
-    if (clue) { clue.classList.remove('hidden'); clue.classList.add('visible'); playSound('reveal'); }
-}
-
-function revealMystery() {
-    for (let i = 1; i <= 3; i++) showClue(i);
-    document.getElementById('mysteryBlur')?.classList.add('revealed');
-    const reveal = document.getElementById('revealText');
-    if (reveal) { reveal.classList.remove('hidden'); reveal.classList.add('visible'); }
-    playSound('victory');
-}
-
 // ===== VOCABULARY =====
 function speakWord(word) {
     if ('speechSynthesis' in window) {
@@ -93,87 +79,151 @@ function speakWord(word) {
 
 // ===== AUDIO PLAYER =====
 const audio = document.getElementById('listeningAudio');
-function playListening() { audio?.play().catch(() => alert('Audio file not found: media/audio/verstappen-story.mp3')); }
+function playListening() {
+    audio?.play().catch(() => alert('Audio file not found. Teacher reads the transcript aloud.'));
+}
 function pauseListening() { audio?.pause(); }
 function restartListening() { if (audio) { audio.currentTime = 0; audio.play().catch(() => {}); } }
-function slowListening() { if (audio) { audio.playbackRate = audio.playbackRate === 1 ? 0.7 : 1; } }
 
-function toggleTranscript() { document.getElementById('transcriptBox')?.classList.toggle('hidden'); }
+// ===== TRUE/FALSE WORKSHEET =====
+function checkTF(btn, isCorrect) {
+    const parent = btn.closest('.tf-buttons');
+    const item = btn.closest('.tf-item');
+    parent.querySelectorAll('button').forEach(b => b.classList.remove('selected-correct', 'selected-wrong'));
 
-// ===== TIMELINE ACTIVITY =====
-function checkInput(id) {
+    if (btn.classList.contains('correct')) {
+        btn.classList.add('selected-correct');
+        playSound('correct');
+    } else {
+        btn.classList.add('selected-wrong');
+        playSound('wrong');
+        setTimeout(() => parent.querySelector('.correct')?.classList.add('selected-correct'), 500);
+    }
+
+    // Show feedback
+    const feedback = item?.querySelector('.tf-feedback');
+    if (feedback) feedback.classList.remove('hidden');
+}
+
+// ===== ANSWER KEY =====
+function showAnswerKey(id) {
+    const answerBox = document.getElementById(id);
+    if (answerBox) {
+        answerBox.classList.toggle('hidden');
+        playSound('reveal');
+    }
+}
+
+// ===== SCANNING QUESTIONS (Reading) =====
+function checkScan(id) {
     const input = document.getElementById(id);
     if (!input) return;
     const user = input.value.toLowerCase().trim();
     const correct = input.dataset.answer.toLowerCase();
-    if (user.length > 2 && (correct.includes(user) || user.includes(correct))) {
-        input.classList.remove('wrong'); input.classList.add('correct');
-        input.value = correct.charAt(0).toUpperCase() + correct.slice(1);
+
+    // Check if answer matches (partial match ok)
+    const isMatch = user.length > 1 && (
+        correct.includes(user) ||
+        user.includes(correct) ||
+        user.includes(correct.split(' ')[0]) // First word match
+    );
+
+    if (isMatch) {
+        input.classList.remove('wrong');
+        input.classList.add('correct');
+        // Format the correct answer nicely
+        input.value = correct.split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
         playSound('correct');
     } else {
-        input.classList.remove('correct'); input.classList.add('wrong');
+        input.classList.remove('correct');
+        input.classList.add('wrong');
         playSound('wrong');
     }
 }
 
-function showAllAnswers() {
-    document.querySelectorAll('.answer-input').forEach(input => {
-        const ans = input.dataset.answer;
-        input.value = ans.charAt(0).toUpperCase() + ans.slice(1);
-        input.classList.remove('wrong'); input.classList.add('correct');
+// ===== SENTENCE CARDS (Past Simple) =====
+function revealSentence(card) {
+    const front = card.querySelector('.sentence-front');
+    const back = card.querySelector('.sentence-back');
+
+    if (front && back) {
+        front.classList.toggle('hidden');
+        back.classList.toggle('hidden');
+        playSound('reveal');
+    }
+}
+
+function revealAllSentences() {
+    document.querySelectorAll('.sentence-card').forEach(card => {
+        const front = card.querySelector('.sentence-front');
+        const back = card.querySelector('.sentence-back');
+        if (front) front.classList.add('hidden');
+        if (back) back.classList.remove('hidden');
     });
+    playSound('victory');
+}
+
+// ===== TIMELINE RESPONSES (Wrap-Up) =====
+function revealResponse(element) {
+    const hint = element.querySelector('.click-hint');
+    const responses = element.querySelectorAll('.response-text');
+
+    if (hint) hint.classList.add('hidden');
+    responses.forEach(r => r.classList.remove('hidden'));
     playSound('reveal');
 }
 
-// ===== QUIZ =====
-function checkQuiz(btn, isCorrect) {
-    const parent = btn.closest('.quiz-options');
-    parent.querySelectorAll('button').forEach(b => b.classList.remove('selected-correct', 'selected-wrong'));
-    if (btn.classList.contains('correct')) {
-        btn.classList.add('selected-correct');
-        playSound('correct');
-    } else {
-        btn.classList.add('selected-wrong');
-        playSound('wrong');
-        setTimeout(() => parent.querySelector('.correct')?.classList.add('selected-correct'), 500);
+// ===== TIC-TAC-TOE GAME =====
+let currentPlayer = 'x';
+let tttMoves = 0;
+
+function selectTTTCell(cell) {
+    if (cell.classList.contains('x') || cell.classList.contains('o')) return;
+
+    // Add current player mark
+    cell.classList.add(currentPlayer);
+    cell.textContent = currentPlayer === 'x' ? '✖' : '⭕';
+    tttMoves++;
+
+    // Check for winner
+    if (checkTTTWinner()) {
+        playSound('victory');
+        setTimeout(() => alert(`Team ${currentPlayer.toUpperCase()} wins!`), 100);
+        return;
     }
-    // Show answer
-    const answer = btn.closest('.quiz-box')?.querySelector('.quiz-answer');
-    if (answer) answer.classList.remove('hidden');
+
+    // Switch player
+    currentPlayer = currentPlayer === 'x' ? 'o' : 'x';
+    playSound('click');
 }
 
-// ===== TRUE/FALSE =====
-function checkTF(btn, isCorrect) {
-    const parent = btn.closest('.tf-buttons');
-    parent.querySelectorAll('button').forEach(b => b.classList.remove('selected-correct', 'selected-wrong'));
-    if (btn.classList.contains('correct')) {
-        btn.classList.add('selected-correct');
-        playSound('correct');
-    } else {
-        btn.classList.add('selected-wrong');
-        playSound('wrong');
-        setTimeout(() => parent.querySelector('.correct')?.classList.add('selected-correct'), 500);
+function checkTTTWinner() {
+    const cells = document.querySelectorAll('.ttt-cell');
+    const lines = [
+        [0, 1, 2], [3, 4, 5], [6, 7, 8], // rows
+        [0, 3, 6], [1, 4, 7], [2, 5, 8], // cols
+        [0, 4, 8], [2, 4, 6] // diagonals
+    ];
+
+    for (const [a, b, c] of lines) {
+        if (cells[a].classList.contains(currentPlayer) &&
+            cells[b].classList.contains(currentPlayer) &&
+            cells[c].classList.contains(currentPlayer)) {
+            return true;
+        }
     }
+    return false;
 }
 
-// ===== PRACTICE TIMER =====
-let practiceTimer = null, practiceSeconds = 5 * 60, practiceRunning = false;
-
-function startPractice() {
-    if (practiceRunning) return;
-    practiceRunning = true;
-    practiceTimer = setInterval(() => {
-        if (--practiceSeconds <= 0) { clearInterval(practiceTimer); practiceRunning = false; playSound('finish'); }
-        if (practiceSeconds === 60) playSound('warning');
-        updateTimer('practiceTimer', practiceSeconds);
-    }, 1000);
-}
-
-function resetPractice() {
-    clearInterval(practiceTimer);
-    practiceRunning = false;
-    practiceSeconds = 5 * 60;
-    document.getElementById('practiceTimer').textContent = '05:00';
+function resetTTT() {
+    const verbs = ['WIN', 'LOSE', 'CRY', 'PASS', 'START', 'FINISH', 'BE', 'CRASH', 'STOP'];
+    document.querySelectorAll('.ttt-cell').forEach((cell, i) => {
+        cell.classList.remove('x', 'o');
+        cell.textContent = verbs[i];
+    });
+    currentPlayer = 'x';
+    tttMoves = 0;
+    playSound('slide');
 }
 
 // ===== SOUNDS =====
@@ -207,5 +257,5 @@ function playSound(type) {
 // ===== INIT =====
 document.addEventListener('DOMContentLoaded', () => {
     updateProgress();
-    console.log('🏎️ Verstappen Lesson Ready!');
+    console.log('🏎️ Hamilton vs Verstappen Lesson Ready!');
 });
