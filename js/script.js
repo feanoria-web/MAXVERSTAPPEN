@@ -1,6 +1,6 @@
 /* ========================================
    F1 RACING - HAMILTON VS VERSTAPPEN LESSON
-   Complete JavaScript - Rivalry Edition
+   Complete JavaScript - All Features Fixed
    ======================================== */
 
 // ===== SLIDE NAVIGATION =====
@@ -10,13 +10,11 @@ const totalSlides = 13;
 function goToSlide(index) {
     if (index < 0 || index >= totalSlides) return;
 
-    // Remove active from current slide and indicator
     document.querySelector('.slide.active')?.classList.remove('active');
     document.querySelector('.indicator.active')?.classList.remove('active');
 
     currentSlide = index;
 
-    // Add active to new slide and indicator - FIXED: specific selectors
     const newSlide = document.querySelector(`.slide[data-slide="${index}"]`);
     const newIndicator = document.querySelector(`.indicator[data-slide="${index}"]`);
 
@@ -27,14 +25,8 @@ function goToSlide(index) {
     playSound('slide');
 }
 
-function nextSlide() {
-    if (currentSlide < totalSlides - 1) goToSlide(currentSlide + 1);
-}
-
-function prevSlide() {
-    if (currentSlide > 0) goToSlide(currentSlide - 1);
-}
-
+function nextSlide() { if (currentSlide < totalSlides - 1) goToSlide(currentSlide + 1); }
+function prevSlide() { if (currentSlide > 0) goToSlide(currentSlide - 1); }
 function updateProgress() {
     const fill = document.getElementById('progressFill');
     if (fill) fill.style.width = `${((currentSlide + 1) / totalSlides) * 100}%`;
@@ -45,29 +37,14 @@ document.querySelectorAll('.indicator').forEach(ind => {
     ind.addEventListener('click', () => goToSlide(parseInt(ind.dataset.slide)));
 });
 
-// Keyboard
+// Keyboard navigation - ONLY arrow keys
 document.addEventListener('keydown', e => {
     if (e.target.tagName === 'INPUT') return;
-    if (['ArrowRight', ' ', 'Enter'].includes(e.key)) { e.preventDefault(); nextSlide(); }
+    if (e.key === 'ArrowRight') { e.preventDefault(); nextSlide(); }
     if (e.key === 'ArrowLeft') { e.preventDefault(); prevSlide(); }
-    if (e.key >= '0' && e.key <= '9') { const n = parseInt(e.key); if (n < totalSlides) goToSlide(n); }
 });
 
-// Touch swipe
-let touchStartX = 0;
-document.addEventListener('touchstart', e => touchStartX = e.changedTouches[0].screenX);
-document.addEventListener('touchend', e => {
-    const diff = touchStartX - e.changedTouches[0].screenX;
-    if (Math.abs(diff) > 50) diff > 0 ? nextSlide() : prevSlide();
-});
-
-// Click navigation
-document.querySelector('.slides-container')?.addEventListener('click', e => {
-    if (e.target.closest('button, input, video, audio, .sentence-card, .student-response, .ttt-cell, .hidden-answer, .start-lights')) return;
-    const x = e.clientX / window.innerWidth;
-    if (x > 0.7) nextSlide();
-    else if (x < 0.3) prevSlide();
-});
+// NO click navigation - removed to prevent accidental navigation
 
 // ===== F1 START LIGHTS =====
 let lightsStarted = false;
@@ -80,7 +57,6 @@ function startLights() {
     const overlay = document.getElementById('startOverlay');
     let lightIndex = 0;
 
-    // Turn on lights one by one
     const lightInterval = setInterval(() => {
         if (lightIndex < lights.length) {
             lights[lightIndex].classList.add('on');
@@ -88,17 +64,11 @@ function startLights() {
             lightIndex++;
         } else {
             clearInterval(lightInterval);
-
-            // Wait a moment, then lights out!
             setTimeout(() => {
                 lights.forEach(l => l.classList.remove('on'));
                 playSound('start');
-
-                // Hide overlay after animation
                 setTimeout(() => {
-                    if (overlay) {
-                        overlay.classList.add('hidden');
-                    }
+                    if (overlay) overlay.classList.add('hidden');
                 }, 500);
             }, 1000);
         }
@@ -157,6 +127,18 @@ function restartListening() {
     if (audio) { audio.currentTime = 0; audio.play().catch(() => {}); }
 }
 
+// ===== TRANSCRIPT TOGGLE =====
+function toggleTranscript() {
+    const box = document.getElementById('transcriptBox');
+    const btn = document.querySelector('.transcript-toggle');
+    if (box) {
+        box.classList.toggle('hidden');
+        if (btn) {
+            btn.textContent = box.classList.contains('hidden') ? '📜 SHOW TRANSCRIPT' : '📜 HIDE TRANSCRIPT';
+        }
+    }
+}
+
 // ===== TRUE/FALSE WORKSHEET =====
 function checkTF(btn, isCorrect) {
     const parent = btn.closest('.tf-buttons');
@@ -172,7 +154,6 @@ function checkTF(btn, isCorrect) {
         setTimeout(() => parent.querySelector('.correct')?.classList.add('selected-correct'), 500);
     }
 
-    // Show feedback
     const feedback = item?.querySelector('.tf-feedback');
     if (feedback) feedback.classList.remove('hidden');
 }
@@ -186,14 +167,13 @@ function showAnswerKey(id) {
     }
 }
 
-// ===== SCANNING QUESTIONS (Reading) =====
+// ===== SCANNING QUESTIONS =====
 function checkScan(id) {
     const input = document.getElementById(id);
     if (!input) return;
     const user = input.value.toLowerCase().trim();
     const correct = input.dataset.answer.toLowerCase();
 
-    // Check if answer matches (partial match ok)
     const isMatch = user.length > 1 && (
         correct.includes(user) ||
         user.includes(correct) ||
@@ -212,11 +192,10 @@ function checkScan(id) {
     }
 }
 
-// ===== SENTENCE CARDS (Past Simple) =====
+// ===== SENTENCE CARDS =====
 function revealSentence(card) {
     const front = card.querySelector('.sentence-front');
     const back = card.querySelector('.sentence-back');
-
     if (front && back) {
         front.classList.toggle('hidden');
         back.classList.toggle('hidden');
@@ -234,39 +213,169 @@ function revealAllSentences() {
     playSound('victory');
 }
 
-// ===== TIMELINE RESPONSES (Wrap-Up) =====
+// ===== TIMELINE RESPONSES =====
 function revealResponse(element) {
     const hint = element.querySelector('.click-hint');
     const responses = element.querySelectorAll('.response-text');
-
     if (hint) hint.classList.add('hidden');
     responses.forEach(r => r.classList.remove('hidden'));
     playSound('reveal');
 }
 
+// ===== 35 VERBS - Mix of Regular and Irregular =====
+const verbList = [
+    // IRREGULAR VERBS (20)
+    { base: 'WIN', past: 'WON' },
+    { base: 'LOSE', past: 'LOST' },
+    { base: 'GO', past: 'WENT' },
+    { base: 'DRIVE', past: 'DROVE' },
+    { base: 'SEE', past: 'SAW' },
+    { base: 'MAKE', past: 'MADE' },
+    { base: 'HAVE', past: 'HAD' },
+    { base: 'BE', past: 'WAS/WERE' },
+    { base: 'GET', past: 'GOT' },
+    { base: 'TAKE', past: 'TOOK' },
+    { base: 'COME', past: 'CAME' },
+    { base: 'GIVE', past: 'GAVE' },
+    { base: 'FIND', past: 'FOUND' },
+    { base: 'THINK', past: 'THOUGHT' },
+    { base: 'SAY', past: 'SAID' },
+    { base: 'KNOW', past: 'KNEW' },
+    { base: 'PUT', past: 'PUT' },
+    { base: 'RUN', past: 'RAN' },
+    { base: 'EAT', past: 'ATE' },
+    { base: 'DRINK', past: 'DRANK' },
+    { base: 'WRITE', past: 'WROTE' },
+    { base: 'READ', past: 'READ' },
+    { base: 'SPEAK', past: 'SPOKE' },
+    { base: 'BREAK', past: 'BROKE' },
+    { base: 'BUY', past: 'BOUGHT' },
+    { base: 'BRING', past: 'BROUGHT' },
+    { base: 'CATCH', past: 'CAUGHT' },
+    { base: 'TEACH', past: 'TAUGHT' },
+    { base: 'FEEL', past: 'FELT' },
+    { base: 'LEAVE', past: 'LEFT' },
+    // REGULAR VERBS (15)
+    { base: 'PLAY', past: 'PLAYED' },
+    { base: 'WATCH', past: 'WATCHED' },
+    { base: 'WALK', past: 'WALKED' },
+    { base: 'TALK', past: 'TALKED' },
+    { base: 'WORK', past: 'WORKED' },
+    { base: 'START', past: 'STARTED' },
+    { base: 'FINISH', past: 'FINISHED' },
+    { base: 'STOP', past: 'STOPPED' },
+    { base: 'CRY', past: 'CRIED' },
+    { base: 'TRY', past: 'TRIED' },
+    { base: 'STUDY', past: 'STUDIED' },
+    { base: 'LOVE', past: 'LOVED' },
+    { base: 'LIKE', past: 'LIKED' },
+    { base: 'HELP', past: 'HELPED' },
+    { base: 'LOOK', past: 'LOOKED' }
+];
+
+// ===== PIT STOP RACE GAME =====
+let hamiltonScore = 0;
+let verstappenScore = 0;
+let currentVerbIndex = 0;
+
+function newPitStopVerb() {
+    currentVerbIndex = Math.floor(Math.random() * verbList.length);
+    const verb = verbList[currentVerbIndex];
+
+    document.getElementById('currentVerb').textContent = verb.base;
+    document.getElementById('verbAnswer').textContent = verb.past;
+    document.getElementById('verbAnswer').classList.add('hidden');
+    playSound('click');
+}
+
+function showPitStopAnswer() {
+    document.getElementById('verbAnswer').classList.remove('hidden');
+    playSound('reveal');
+}
+
+function addScore(team) {
+    if (team === 'hamilton') {
+        hamiltonScore++;
+        document.getElementById('hamiltonScore').textContent = hamiltonScore;
+    } else {
+        verstappenScore++;
+        document.getElementById('verstappenScore').textContent = verstappenScore;
+    }
+    playSound('correct');
+}
+
+function resetPitStop() {
+    hamiltonScore = 0;
+    verstappenScore = 0;
+    document.getElementById('hamiltonScore').textContent = '0';
+    document.getElementById('verstappenScore').textContent = '0';
+    document.getElementById('currentVerb').textContent = 'WIN';
+    document.getElementById('verbAnswer').textContent = 'WON';
+    document.getElementById('verbAnswer').classList.add('hidden');
+    playSound('slide');
+}
+
 // ===== TIC-TAC-TOE GAME =====
 let currentPlayer = 'x';
-let tttMoves = 0;
+let tttBoard = ['', '', '', '', '', '', '', '', ''];
+let currentTTTVerbs = [];
+
+function getRandomVerbs(count) {
+    const shuffled = [...verbList].sort(() => Math.random() - 0.5);
+    return shuffled.slice(0, count);
+}
+
+function initTTT() {
+    currentTTTVerbs = getRandomVerbs(9);
+    tttBoard = ['', '', '', '', '', '', '', '', ''];
+    currentPlayer = 'x';
+
+    const board = document.getElementById('tttBoard');
+    if (!board) return;
+
+    board.innerHTML = '';
+    currentTTTVerbs.forEach((verb, i) => {
+        const cell = document.createElement('div');
+        cell.className = 'ttt-cell';
+        cell.textContent = verb.base;
+        cell.dataset.index = i;
+        cell.dataset.verb = verb.base;
+        cell.dataset.past = verb.past;
+        cell.onclick = () => selectTTTCell(cell);
+        board.appendChild(cell);
+    });
+
+    updateTurnDisplay();
+}
 
 function selectTTTCell(cell) {
-    if (cell.classList.contains('x') || cell.classList.contains('o')) return;
+    const index = parseInt(cell.dataset.index);
+    if (tttBoard[index] !== '') return;
 
+    tttBoard[index] = currentPlayer;
     cell.classList.add(currentPlayer);
     cell.textContent = currentPlayer === 'x' ? '✖' : '⭕';
-    tttMoves++;
 
     if (checkTTTWinner()) {
         playSound('victory');
-        setTimeout(() => alert(`Team ${currentPlayer.toUpperCase()} wins!`), 100);
+        setTimeout(() => {
+            alert(`Team ${currentPlayer.toUpperCase()} wins! 🏆\n\nThe verb was: ${cell.dataset.verb} → ${cell.dataset.past}`);
+        }, 100);
+        return;
+    }
+
+    if (tttBoard.every(c => c !== '')) {
+        playSound('finish');
+        setTimeout(() => alert("It's a draw!"), 100);
         return;
     }
 
     currentPlayer = currentPlayer === 'x' ? 'o' : 'x';
+    updateTurnDisplay();
     playSound('click');
 }
 
 function checkTTTWinner() {
-    const cells = document.querySelectorAll('.ttt-cell');
     const lines = [
         [0, 1, 2], [3, 4, 5], [6, 7, 8],
         [0, 3, 6], [1, 4, 7], [2, 5, 8],
@@ -274,23 +383,23 @@ function checkTTTWinner() {
     ];
 
     for (const [a, b, c] of lines) {
-        if (cells[a].classList.contains(currentPlayer) &&
-            cells[b].classList.contains(currentPlayer) &&
-            cells[c].classList.contains(currentPlayer)) {
+        if (tttBoard[a] && tttBoard[a] === tttBoard[b] && tttBoard[a] === tttBoard[c]) {
             return true;
         }
     }
     return false;
 }
 
+function updateTurnDisplay() {
+    const turn = document.getElementById('currentTurn');
+    if (turn) {
+        turn.textContent = `Team ${currentPlayer.toUpperCase()}'s turn`;
+        turn.style.color = currentPlayer === 'x' ? '#ef4444' : '#3b82f6';
+    }
+}
+
 function resetTTT() {
-    const verbs = ['WIN', 'LOSE', 'CRY', 'PASS', 'START', 'FINISH', 'BE', 'CRASH', 'STOP'];
-    document.querySelectorAll('.ttt-cell').forEach((cell, i) => {
-        cell.classList.remove('x', 'o');
-        cell.textContent = verbs[i];
-    });
-    currentPlayer = 'x';
-    tttMoves = 0;
+    initTTT();
     playSound('slide');
 }
 
@@ -300,7 +409,8 @@ function playSound(type) {
         const ctx = new (window.AudioContext || window.webkitAudioContext)();
         const osc = ctx.createOscillator();
         const gain = ctx.createGain();
-        osc.connect(gain); gain.connect(ctx.destination);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
         gain.gain.value = 0.15;
 
         const sounds = {
@@ -328,11 +438,13 @@ function playSound(type) {
 document.addEventListener('DOMContentLoaded', () => {
     updateProgress();
 
-    // Make sure first slide is active
     const firstSlide = document.querySelector('.slide[data-slide="0"]');
     if (firstSlide && !firstSlide.classList.contains('active')) {
         firstSlide.classList.add('active');
     }
+
+    // Initialize Tic-Tac-Toe with random verbs
+    initTTT();
 
     console.log('🏎️ Hamilton vs Verstappen Lesson Ready!');
 });
